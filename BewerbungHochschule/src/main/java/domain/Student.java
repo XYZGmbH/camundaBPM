@@ -28,7 +28,4 @@ public class Student extends Person{
 		this.semBez = semBez;
 	}
 
-
-	
-
 }

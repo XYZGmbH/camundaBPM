@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+
+import domain.Bewerber;
 
 public class DBAcces{
 	
@@ -19,6 +22,59 @@ public class DBAcces{
 	private Connection conn = null;
 	
 	//methods
+	//String name, String vorname, int alter, int pid, String telefonnummer, String email,
+	//Studiengang studiengang, Haertefall haertefall, int nc
+	public LinkedList<Bewerber> getBewerber(){
+		setCon();
+		
+		String sql = "select * from 'Bewerber'";
+		
+		try(Statement s = conn.createStatement()) {
+			try(ResultSet rs = s.executeQuery(sql)){
+				LinkedList<Bewerber> bewerberListe = new LinkedList<Bewerber>();
+				while(rs.next()) {
+					int bid = rs.getInt("PID");
+					ResultSet personAtr = this.getPerson(bid);
+					Bewerber b = new Bewerber(personAtr.getString(2), personAtr.getString(3),
+							personAtr.getInt(4), personAtr.getInt(1), personAtr.getString(5), 
+							personAtr.getString(6), Studiengang.valueOf(personAtr.getString(7)), null, 0);
+					
+					if(personAtr.getObject(8) != null) {
+						
+					}
+					bewerberListe.add(b);
+					
+				}
+			}catch(SQLException e) {
+				
+			}
+		}catch(SQLException e2) {
+			
+		}
+		
+		closeCon();
+		return null;
+	}
+	
+	public ResultSet getPerson(int pid) {
+		
+		String sql = "select * from 'Person' where 'pid' = ?";
+		ResultSet rsReal = null;
+		try(PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, pid);
+			try(ResultSet rs = ps.executeQuery(sql)){
+				
+				rsReal = rs;
+				
+			}catch(SQLException e) {
+				
+			}
+		}catch(SQLException e2) {
+			
+		}		
+		return rsReal;
+	}
+	
 	public void insertIntoStudent(String matrikelNummer, SemesterbeitragBezahlt beitragBezahlt) {
 		setCon();
 		
