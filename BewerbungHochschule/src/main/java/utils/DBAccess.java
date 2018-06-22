@@ -10,20 +10,20 @@ import java.util.LinkedList;
 
 import domain.Bewerber;
 
-public class DBAcces{
+public class DBAccess{
 	
 	//Constructor
-	private DBAcces() {
+	private DBAccess() {
 		
 	}
 
 	//Objects
-	private static DBAcces exemplar = null;
+	private static DBAccess exemplar = null;
 	private Connection conn = null;
 	
 	//methods
 	//String name, String vorname, int alter, int pid, String telefonnummer, String email,
-	//Studiengang studiengang, Haertefall haertefall, int nc
+	//Studiengang studiengang, Haertefall haertefall, double nc
 	public LinkedList<Bewerber> getBewerber(){
 		setCon();
 		
@@ -102,7 +102,7 @@ public class DBAcces{
 		closeCon();
 	}
 	
-	public void insertIntoBewerber(String haertefall, int nc) {
+	public void insertIntoBewerber(String haertefall, double nc) {
 		setCon();
 		
 		String sql = "insert into bewerber (BID, Haertefall, NC) "
@@ -242,11 +242,150 @@ public class DBAcces{
 		}
 	}
 	
-	public static DBAcces getInstance() {
+	public static DBAccess getInstance() {
 		if(exemplar == null) {
-			exemplar = new DBAcces();
+			exemplar = new DBAccess();
 		}
 		return exemplar;
 	}
+	
+
+	
+	//Delete-Methoden
+	
+	
+	public void deleteFromPerson(int pId) {
+		try {
+			PreparedStatement pSmt = null;
+			String sql = "DELETE FROM person WHERE pid =" + pId;
+			pSmt = conn.prepareStatement(sql);
+			pSmt.executeQuery();
+		} catch (SQLException e) {
+			System.out.println("Delete from person konnte nicht ausgeführt werden");
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	public void deleteFromBewerber(int pId){
+		try {
+			PreparedStatement pSmt = null;
+			String sql = "DELETE FROM bewerber WHERE bId =" + pId;
+			pSmt = conn.prepareStatement(sql);
+			pSmt.executeQuery();
+		} catch (SQLException e) {
+			System.out.println("Delete from bewerber konnte nicht ausgeführt werden");
+			e.printStackTrace();
+		}
+	}
+		
+		
+		
+		public void deleteFromStudent(int pId){
+			try {
+				PreparedStatement pSmt = null;
+				String sql = "DELETE FROM student WHERE sId =" + pId;
+				pSmt = conn.prepareStatement(sql);
+				pSmt.executeQuery();
+			} catch (SQLException e) {
+				System.out.println("Delete from student konnte nicht ausgeführt werden");
+				e.printStackTrace();
+			}		
+		
+	}
+	
+	
+	
+
+	
+	
+	//Methoden für Nc-Werte vergleichen
+	
+	public LinkedList<Double> getAlleNcs() {
+		setCon();
+
+		ResultSet rsNcs = null;
+		PreparedStatement pSmt = null;
+		String sql = "SELECT nc FROM Bewerber";
+		LinkedList<Double> ncWerte = new LinkedList<Double>();
+		try {
+			pSmt = conn.prepareStatement(sql);
+			pSmt.executeQuery();
+
+			if (!rsNcs.next()) {
+				System.out.println("Keine Bewerber in Datenbank");
+			} else {
+
+				while (rsNcs.next()) {
+					double nc = rsNcs.getDouble("nc");
+					ncWerte.add(nc);
+
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.println("NcWerte vergleichen konnte nicht ausgeführt werden");
+			e.printStackTrace();
+		}
+
+		return ncWerte;
+	}
+	
+	
+
+	public LinkedList<Bewerber> getZuSchlechteBewerber(Double letzterNcFuerZulassung) {
+
+		LinkedList<Bewerber> schlechteBewerberListe = new LinkedList<Bewerber>();
+		Bewerber bewerber = null;
+		ResultSet rs = null;
+		PreparedStatement pSmt = null;
+		String sql = "SELECT * FROM Person INNER JOIN Bewerber WHERE nc > letzterNcFuerZulassung";
+
+		try {
+			setCon();
+			pSmt = conn.prepareStatement(sql);
+			pSmt.executeQuery();
+
+			if (!rs.next()) {
+
+				//Bewerber in nächste Phase lassen?
+
+			} else {
+
+				while (rs.next()) {
+					int pid = rs.getInt("pid");
+					String name = rs.getString("name");
+					String vorname = rs.getString("vorname");
+					int alter = rs.getInt("alterJahre");
+					String telefonnummer = rs.getString("telefonnummer");
+					String eMail = rs.getString("emailAdresse");
+					Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
+					Haertefall haertefall = Haertefall.valueOf(rs.getString("haertefall"));
+					Double nc = rs.getDouble("nc");
+
+					bewerber = new Bewerber(name, vorname, alter, pid, telefonnummer, eMail, studiengang, haertefall,
+							nc);
+
+					schlechteBewerberListe.add(bewerber);
+
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.println("getZuSchlechteBewerber konnte nciht ausgeführt werden");
+			e.printStackTrace();
+		}
+
+		return schlechteBewerberListe;
+
+	}
+	
+	
+	
+
+	
+	
+	
 	
 }
