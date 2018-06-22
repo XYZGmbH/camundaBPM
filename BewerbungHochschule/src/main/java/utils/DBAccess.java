@@ -111,7 +111,7 @@ public class DBAccess{
 		try(PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
 			ps.setString(2, haertefall);
-			ps.setInt(3, nc);
+			ps.setDouble(3, nc);
 			
 			try {
 				ps.executeUpdate();
