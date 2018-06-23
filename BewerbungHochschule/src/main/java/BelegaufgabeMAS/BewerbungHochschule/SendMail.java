@@ -62,7 +62,7 @@ public class SendMail implements JavaDelegate{
 //		email.addTo(toEmail);
 //		email.setFrom("XXXXXX@gmx.de");
 		email.setHostName("mail.htw-berlin.de");
-		email.setAuthentication("s0561126", "Idl2swed");
+		email.setAuthentication("", "");
 		email.addTo(toEmail);
 		email.setFrom("s0561126@htw-berlin.de");
 		email.setSubject(subject);
