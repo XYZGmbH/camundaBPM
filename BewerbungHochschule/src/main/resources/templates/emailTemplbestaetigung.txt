@@ -1,0 +1,12 @@
+Ihre ${applicationStatus}
+
+Sehr geehrte/r ${anrede} ${vorname} ${nachname},
+
+vielen Dank fuer Die Einreichung Ihrer Dokumente.
+
+Wir haben Ihre Daten ueberprueft und fanden alles in korrekter Ausarbeitung vor.
+
+Wir danken Ihnen fuer das entgegengebrachte Interesse und wuenschen Ihnen fuer die Zukunft viel Erfolg.
+
+Mit freundlichen Grue?en,
+das Immatrikulationsamt der Imaginary University.
