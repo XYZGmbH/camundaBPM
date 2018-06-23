@@ -1,5 +1,6 @@
 package BelegaufgabeMAS.BewerbungHochschule;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -37,22 +38,18 @@ public class CreateStudentCard implements JavaDelegate{
 	private String result = "";
 	
 	@Override
-	public void execute(DelegateExecution arg0) throws Exception {
+	public void execute(DelegateExecution exec) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	public static void main(String[] args) throws Exception {
 
-        new CreateStudentCard().createCard();
-        System.out.println("durch");
-    }
-
-	public void createCard() {
+	public boolean createCard(String vorname, String nachname, String geburtsdatum, String matrikelnummer, String studiengang) {
 		
 		PdfWriter pw = null;
+		String path = "./target/studentCard" + matrikelnummer + ".pdf";
 		try {
-			pw = new PdfWriter("./target/pdfTest.pdf");
+			pw = new PdfWriter(path);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,13 +76,15 @@ public class CreateStudentCard implements JavaDelegate{
 		table.setAutoLayout();
 		table.setMinWidth(300f);
 		table.addCell(generateCell(img));
-		table.addCell(generateCell("Nachname: Anhalt\nVorname: Felix\nGeburtsdatum: 21.02.1997\n"));
-		table.addCell(generateCell("\nBibliotheksnummer:012345678756432\nStudiengang: Wirtschaftsinformatik\n Gültig bis: 30.09.2018", 2 , 2));	
+		table.addCell(generateCell("Nachname: " + nachname + "\nVorname: " + vorname + "\nGeburtsdatum: " + geburtsdatum + "\n"));
+		table.addCell(generateCell("\nMatrikelnummer: " + matrikelnummer + "\nStudiengang: " + studiengang + "\n Gültig bis: 30.09.2018", 2 , 2));	
 		
 		doc.add(new Paragraph("Studierendenausweis der Imaginary University Berlin"));
 		doc.add(table);
 		
 		doc.close();
+		
+		return (new File(path)).exists();
 		
 	}
 	

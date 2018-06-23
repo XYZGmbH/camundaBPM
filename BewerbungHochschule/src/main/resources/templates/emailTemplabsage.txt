@@ -1,0 +1,13 @@
+Ihre ${applicationStatus}
+
+Sehr geehrte/r ${anrede} ${vorname} ${nachname},
+
+vielen Dank fuer Ihre Teilnahme am Bewerbungsverfahren.
+
+Leider haben Ihre Qualifikationen nicht ausgereicht, wir wuerden uns jedoch sehr freuen,
+wenn Sie sich naechstes Semester wieder bei uns bewerben.
+
+Wir danken Ihnen fuer das entgegengebrachte Interesse und wuenschen Ihnen fuer die Zukunft viel Erfolg.
+
+Mit freundlichen Grue?en,
+das Immatrikulationsamt der Imaginary University.

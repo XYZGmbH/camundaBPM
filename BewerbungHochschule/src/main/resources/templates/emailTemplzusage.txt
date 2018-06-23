@@ -1,0 +1,15 @@
+﻿Ihre ${applicationStatus}
+
+Sehr geehrte/r ${anrede} ${vorname} ${nachname},
+
+vielen Dank fuer Ihre Teilnahme am Bewerbungsverfahren.
+
+Wir bitten Sie hiermit um den Versand  von den Nachweisen fuer Ihre Bewerbungsunterlagen,
+die Zahlung des Semesterbeitrags von 250 Euro an Die Iban DE01 2345 6789 1011 1213 14
+und den Nachweisen bezueglich Ihrer Versicherung bis zum 15.07 diesen Jahres.
+
+
+Wir danken Ihnen fuer das entgegengebrachte Interesse und wuenschen Ihnen fuer die Zukunft viel Erfolg.
+
+Mit freundlichen Grue�en,
+das Immatrikulationsamt der Imaginary University.
