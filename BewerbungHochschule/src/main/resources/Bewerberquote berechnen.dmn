@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_0idzgqr" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="Decision_Bewerberquote_berechnen" name="Bewerberquote berechnen">
+    <extensionElements>
+      <biodi:bounds x="200" y="200" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1" hitPolicy="COLLECT" aggregation="SUM">
+      <input id="input_1" label="Härtefallkategorien">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1nruqhz">
+          <text>"Studiengangs- /Hochschulwechsel","Zweitstudium","Kinder","Behinderung"</text>
+        </inputValues>
+      </input>
+      <output id="output_1" label="Ergebnis" name="Ergebnis" typeRef="double" />
+      <rule id="DecisionRule_1pde8s0">
+        <inputEntry id="UnaryTests_002l3tu">
+          <text>"Studiengangs- /Hochschulwechsel"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0t5n4fy">
+          <text>0,05</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0e3lhho">
+        <inputEntry id="UnaryTests_1rm6ycm">
+          <text>"Zweitstudium"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_16soywy">
+          <text>0,05</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1x12d84">
+        <inputEntry id="UnaryTests_1si6xu5">
+          <text>"Kinder"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02zo9vv">
+          <text>0,05</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tjwndi">
+        <inputEntry id="UnaryTests_0q3cben">
+          <text>"Behinderung"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_120kj1t">
+          <text>0,05</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
