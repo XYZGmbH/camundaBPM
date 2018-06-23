@@ -13,13 +13,18 @@ import utils.Haertefall;
 
 public class CompareNc implements JavaDelegate{
 	
-	
-	
 
 	@Override
 	public void execute(DelegateExecution exec) throws Exception {
 		// TODO Auto-generated method stub
-		exec.getVariable("name");
+	
+	}
+	
+	
+	
+	public Bewerber getOurCandidate(){
+	
+		
 	}
 	
 	
