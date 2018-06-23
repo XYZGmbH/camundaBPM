@@ -15,43 +15,41 @@ public class CompareNc implements JavaDelegate{
 	
 
 	@Override
-	public void execute(DelegateExecution exec) throws Exception {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	
-	
-	public Bewerber getOurCandidate(){
-	
-		
-	}
-	
-	
-	
-	public boolean unserBewerberImNcVergleich(Bewerber unserBewerber, int anzahlStuediengangsplaetze,
-			double haertefallquote) {
+	public void execute(DelegateExecution execution) throws Exception {
 
-		boolean weiterImProzess = true;
+	//Wie Boolean weitergeben?	unserBewerberImNcVergleich(20, 0.15);
+		
+		
+	
+	}
+	
+	
+	
+	
+	
+	public boolean unserBewerberImNcVergleich(int anzahlStuediengangsplaetze, double haertefallquote) {
+
+		Bewerber ourCandidate = DBAccess.getInstance().getOurCandidate();
+		boolean continueProcess = true;
 
 		LinkedList<Double> ncWerte = DBAccess.getInstance().getAlleNcs();
 		double letzterNcZulassung = getLetzterNcFuerZulassung(anzahlStuediengangsplaetze, ncWerte);
 
-		if (unserBewerber.getNc() > letzterNcZulassung) {
-			if (unserBewerber.getHaertefall() == Haertefall.zero) {
-				weiterImProzess = false;
+		if (ourCandidate.getNc() > letzterNcZulassung) {
+			if (ourCandidate.getHaertefall() == Haertefall.zero) {
+				continueProcess = false;
 			} else {
-				LinkedList<Bewerber> schlechteBewerberListe = DBAccess.getInstance().getZuSchlechteBewerber(letzterNcZulassung);
+				LinkedList<Bewerber> schlechteBewerberListe = DBAccess.getInstance().getCandidatesWithInsufficientGrades(letzterNcZulassung);
 				LinkedList<Double> ncsHaertefaelle = getNcsVonHaertefaellen(schlechteBewerberListe);
 				Double schlechtesterHaertefallNc = getLetzterNcHaertefaelle(haertefallquote, anzahlStuediengangsplaetze,
 						ncsHaertefaelle);
-				if (unserBewerber.getNc() > schlechtesterHaertefallNc) {
-					weiterImProzess = false;
+				if (ourCandidate.getNc() > schlechtesterHaertefallNc) {
+					continueProcess = false;
 				}
 
 			}
 		}
-		return weiterImProzess;
+		return continueProcess;
 
 	}
 	

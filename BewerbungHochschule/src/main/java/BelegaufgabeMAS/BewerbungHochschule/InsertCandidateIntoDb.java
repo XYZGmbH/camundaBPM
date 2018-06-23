@@ -1,9 +1,13 @@
 package BelegaufgabeMAS.BewerbungHochschule;
 
+import java.util.Date;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
+import utils.Anrede;
 import utils.DBAccess;
+import utils.Haertefall;
 import utils.Studiengang;
 
 public class InsertCandidateIntoDb implements JavaDelegate{
@@ -14,18 +18,20 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 	//vielleicht noch Anrede?
 	//Berechneter Härtefall fehlt
 	//Alter fehlt
-		
+	
+	Anrede anrede = Anrede.valueOf(execution.getVariable("anrede").toString());
 	String name = execution.getVariable("name").toString();
 	String vorname = execution.getVariable("vorname").toString();
-	//int alterJahre = (int) execution.getVariable("alter");
+	Date geburtsdatum = (Date) execution.getVariable("geburtsdatum");
 	String rufnummer = execution.getVariable("rufnummer").toString();
 	String eMail = execution.getVariable("email").toString();
-	String studienfach = execution.getVariable("studienfach").toString();
+	Studiengang studienfach = Studiengang.valueOf(execution.getVariable("studienfach").toString());
 	double nc = (double) execution.getVariable("nc");
+	String bewerberquote = execution.getVariable("bewerberquote").toString();
 	
 	
-	DBAccess.getInstance().insertIntoPerson(name, vorname, alter, rufnummer, eMail, studienfach);
-	DBAccess.getInstance().insertIntoBewerber(haertefall, nc);
+	DBAccess.getInstance().insertIntoPerson(anrede, name, vorname, geburtsdatum, rufnummer, eMail, studienfach);
+	DBAccess.getInstance().insertIntoBewerber(bewerberquote, nc);
 	
 	
 	

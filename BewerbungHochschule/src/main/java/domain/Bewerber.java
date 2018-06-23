@@ -1,14 +1,17 @@
 package domain;
 
+import java.util.Date;
+
+import utils.Anrede;
 import utils.Haertefall;
 import utils.SemesterbeitragBezahlt;
 import utils.Studiengang;
 
 public class Bewerber extends Person {
 
-	public Bewerber(String name, String vorname, int alter, int pid, String telefonnummer, String email,
+	public Bewerber(Anrede anrede, String name, String vorname, Date geburtsdatum, int pid, String telefonnummer, String email,
 			Studiengang studiengang, Haertefall haertefall, double nc, SemesterbeitragBezahlt semesterbeitragBezahlt) {
-		super(name, vorname, alter, pid, telefonnummer, email, studiengang);
+		super(anrede, name, vorname, geburtsdatum, pid, telefonnummer, email, studiengang);
 		this.haertefall = haertefall;
 		this.nc = nc;
 		this.semesterbeitragBezahlt = semesterbeitragBezahlt;

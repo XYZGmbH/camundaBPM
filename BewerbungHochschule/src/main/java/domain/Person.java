@@ -1,13 +1,17 @@
 package domain;
 
+import java.util.Date;
+
+import utils.Anrede;
 import utils.Studiengang;
 
 public abstract class Person {
 	
-	public Person(String name, String vorname, int alter,int pid, String telefonnummer, String email, Studiengang studiengang) {
+	public Person(Anrede anrede, String name, String vorname, Date geburtsdatum, int pid, String telefonnummer, String email, Studiengang studiengang) {
+		this.anrede = anrede;
 		this.name = name;
 		this.vorname = vorname;
-		this.alter = alter;
+		this.geburtsdatum = geburtsdatum;
 		this.pid = pid;
 		this.telefonnummer = telefonnummer;
 		this.email = email;
@@ -15,10 +19,18 @@ public abstract class Person {
 	}
 
 	private String name, vorname, telefonnummer, email;
-	int alter, pid; 
+	Date geburtsdatum; 
+	int pid; 
 	Studiengang studiengang;
-	Adresse adresse;
+	Anrede anrede;
+
 	
+	public Anrede getAnrede() {
+		return anrede;
+	}
+	public void setAnrede(Anrede anrede) {
+		this.anrede = anrede;
+	}
 	public String getName() {
 		return name;
 	}
@@ -43,11 +55,12 @@ public abstract class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getAlter() {
-		return alter;
+
+	public Date getGeburtsdatum() {
+		return geburtsdatum;
 	}
-	public void setAlter(int alter) {
-		this.alter = alter;
+	public void setGeburtsdatum(Date geburtsdatum) {
+		this.geburtsdatum = geburtsdatum;
 	}
 	public int getPid() {
 		return pid;
@@ -55,12 +68,7 @@ public abstract class Person {
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
-	public Adresse getAdresse() {
-		return adresse;
-	}
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
+
 	public Studiengang getStudiengang() {
 		return studiengang;
 	}

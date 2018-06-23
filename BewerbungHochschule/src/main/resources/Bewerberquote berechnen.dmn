@@ -10,13 +10,13 @@
           <text></text>
         </inputExpression>
         <inputValues id="UnaryTests_1nruqhz">
-          <text>"Studiengangs- /Hochschulwechsel","Zweitstudium","Kinder","Behinderung"</text>
+          <text><![CDATA["Studiengangs- /Hochschulwechsel","Zweitstudium","Kinder","Behinderung"]]></text>
         </inputValues>
       </input>
-      <output id="output_1" label="Ergebnis" name="Ergebnis" typeRef="double" />
+      <output id="output_1" label="Ergebnis" name="bewerberquote" typeRef="double" />
       <rule id="DecisionRule_1pde8s0">
         <inputEntry id="UnaryTests_002l3tu">
-          <text>"Studiengangs- /Hochschulwechsel"</text>
+          <text><![CDATA["Studiengangs- /Hochschulwechsel"]]></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0t5n4fy">
           <text>0,05</text>
@@ -24,7 +24,7 @@
       </rule>
       <rule id="DecisionRule_0e3lhho">
         <inputEntry id="UnaryTests_1rm6ycm">
-          <text>"Zweitstudium"</text>
+          <text><![CDATA["Zweitstudium"]]></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_16soywy">
           <text>0,05</text>
@@ -32,7 +32,7 @@
       </rule>
       <rule id="DecisionRule_1x12d84">
         <inputEntry id="UnaryTests_1si6xu5">
-          <text>"Kinder"</text>
+          <text><![CDATA["Kinder"]]></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_02zo9vv">
           <text>0,05</text>
@@ -40,7 +40,7 @@
       </rule>
       <rule id="DecisionRule_0tjwndi">
         <inputEntry id="UnaryTests_0q3cben">
-          <text>"Behinderung"</text>
+          <text><![CDATA["Behinderung"]]></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_120kj1t">
           <text>0,05</text>

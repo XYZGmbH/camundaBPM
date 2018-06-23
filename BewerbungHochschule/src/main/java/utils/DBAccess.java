@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.LinkedList;
 
 import domain.Bewerber;
@@ -25,37 +26,37 @@ public class DBAccess {
 	// String name, String vorname, int alter, int pid, String telefonnummer,
 	// String email,
 	// Studiengang studiengang, Haertefall haertefall, double nc,
-	public LinkedList<Bewerber> getBewerber() {
-		setCon();
-
-		String sql = "select * from 'Bewerber'";
-
-		try (Statement s = conn.createStatement()) {
-			try (ResultSet rs = s.executeQuery(sql)) {
-				LinkedList<Bewerber> bewerberListe = new LinkedList<Bewerber>();
-				while (rs.next()) {
-					int bid = rs.getInt("PID");
-					ResultSet personAtr = this.getPerson(bid);
-					Bewerber b = new Bewerber(personAtr.getString(2), personAtr.getString(3), personAtr.getInt(4),
-							personAtr.getInt(1), personAtr.getString(5), personAtr.getString(6),
-							Studiengang.valueOf(personAtr.getString(7)), null, 0, SemesterbeitragBezahlt.n);
-
-					if (personAtr.getObject(8) != null) {
-
-					}
-					bewerberListe.add(b);
-
-				}
-			} catch (SQLException e) {
-
-			}
-		} catch (SQLException e2) {
-
-		}
-
-		closeCon();
-		return null;
-	}
+//	public LinkedList<Bewerber> getBewerber() {
+//		setCon();
+//
+//		String sql = "select * from 'Bewerber'";
+//
+//		try (Statement s = conn.createStatement()) {
+//			try (ResultSet rs = s.executeQuery(sql)) {
+//				LinkedList<Bewerber> bewerberListe = new LinkedList<Bewerber>();
+//				while (rs.next()) {
+//					int bid = rs.getInt("PID");
+//					ResultSet personAtr = this.getPerson(bid);
+//					Bewerber b = new Bewerber(personAtr.getString(2), personAtr.getString(3), personAtr.getInt(4),
+//							personAtr.getInt(1), personAtr.getString(5), personAtr.getString(6),
+//							Studiengang.valueOf(personAtr.getString(7)), null, 0, SemesterbeitragBezahlt.n);
+//
+//					if (personAtr.getObject(8) != null) {
+//
+//					}
+//					bewerberListe.add(b);
+//
+//				}
+//			} catch (SQLException e) {
+//
+//			}
+//		} catch (SQLException e2) {
+//
+//		}
+//
+//		closeCon();
+//		return null;
+//	}
 
 	public ResultSet getPerson(int pid) {
 		setCon();
@@ -77,14 +78,15 @@ public class DBAccess {
 		return rsReal;
 	}
 
-	public void insertIntoStudent(String matrikelNummer) {
+	public void insertIntoStudent(String matrikelNummer, String versichertennummer) {
 		setCon();
 
-		String sql = "insert into student (SID, Matrikelnummer) values (?,?)";
+		String sql = "insert into student (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
 			ps.setString(2, matrikelNummer);
+			ps.setString(3, versichertennummer);
 
 			try {
 				ps.executeUpdate();
@@ -105,12 +107,13 @@ public class DBAccess {
 	public void insertIntoBewerber(String haertefall, double nc) {
 		setCon();
 
-		String sql = "insert into bewerber (BID, Haertefall, NC) " + "values (?,?,?)";
+		String sql = "insert into bewerber (BID, Haertefall, NC, SemesterbeitragBezahlt) " + "values (?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
 			ps.setString(2, haertefall);
 			ps.setDouble(3, nc);
+			ps.setString(4, SemesterbeitragBezahlt.n.toString());
 
 			try {
 				ps.executeUpdate();
@@ -128,19 +131,20 @@ public class DBAccess {
 		closeCon();
 	}
 
-	public void insertIntoPerson(String name, String vorname, int alter, String telefonnummer, String email,
+	public void insertIntoPerson(Anrede anrede, String name, String vorname, Date geburtsdatum, String telefonnummer, String email,
 			Studiengang studiengang) {
 		setCon();
-		String sql = "insert into person (Name, Vorname, alterJahre, Telefonnummer, EmailAdresse, Studiengang) "
-				+ "values (?,?,?,?,?,?)";
+		String sql = "insert into person (Anrede, Name, Vorname, alterJahre, Telefonnummer, EmailAdresse, Studiengang) "
+				+ "values (?,?,?,?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			ps.setString(1, name);
-			ps.setString(2, vorname);
-			ps.setInt(3, alter);
-			ps.setString(4, telefonnummer);
-			ps.setString(5, email);
-			ps.setString(6, studiengang.toString());
+			ps.setString(1, anrede.toString());
+			ps.setString(2, name);
+			ps.setString(3, vorname);
+			ps.setDate(4, (java.sql.Date) geburtsdatum);
+			ps.setString(5, telefonnummer);
+			ps.setString(6, email);
+			ps.setString(7, studiengang.toString());
 
 			try {
 				ps.executeUpdate();
@@ -158,32 +162,66 @@ public class DBAccess {
 		closeCon();
 	}
 
-	public void insertIntoAdresse(String Adresszeile1, String Adresszeile2, String plz, String ort) {
-		setCon();
+	
+	
+	public void insertIntoBankdaten(String Bic, String iban) {
+	setCon();
 
-		String sql = "insert into Adresse (Adresszeile1, Adresszeile2, plz, ort) values (?,?,?,?)";
+	String sql = "INSERT INTO Bankdaten (Bic, Iban) values (?,?)";
 
-		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			ps.setString(1, Adresszeile1);
-			ps.setString(2, Adresszeile2);
-			ps.setString(3, plz);
-			ps.setString(4, ort);
+	try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+		ps.setString(1, Bic);
+		ps.setString(2, iban);
+		
 
-			try {
-				ps.executeUpdate();
-				System.out.println("Adresse inserted");
-			} catch (SQLException e1) {
-				System.out.println("Unable to execute update");
-				e1.printStackTrace();
-			}
-
-		} catch (SQLException e) {
-			System.out.println("Unable to prepare Statement");
-			e.printStackTrace();
+		try {
+			ps.executeUpdate();
+			System.out.println("Bankdaten inserted");
+		} catch (SQLException e1) {
+			System.out.println("Unable to execute update");
+			e1.printStackTrace();
 		}
 
-		closeCon();
+	} catch (SQLException e) {
+		System.out.println("Unable to prepare Statement");
+		e.printStackTrace();
 	}
+
+	closeCon();
+}
+	
+	
+	
+	
+	
+	
+	
+//	public void insertIntoAdresse(String Adresszeile1, String Adresszeile2, String plz, String ort) {
+//		setCon();
+//
+//		String sql = "insert into Adresse (Adresszeile1, Adresszeile2, plz, ort) values (?,?,?,?)";
+//
+//		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+//			ps.setString(1, Adresszeile1);
+//			ps.setString(2, Adresszeile2);
+//			ps.setString(3, plz);
+//			ps.setString(4, ort);
+//
+//			try {
+//				ps.executeUpdate();
+//				System.out.println("Adresse inserted");
+//			} catch (SQLException e1) {
+//				System.out.println("Unable to execute update");
+//				e1.printStackTrace();
+//			}
+//
+//		} catch (SQLException e) {
+//			System.out.println("Unable to prepare Statement");
+//			e.printStackTrace();
+//		}
+//
+//		closeCon();
+//	}
 
 	private int getPid() {
 
@@ -244,10 +282,45 @@ public class DBAccess {
 		return exemplar;
 	}
 
+	
 	// Unseren Bewerber aus DB filtern
 
 	public Bewerber getOurCandidate() {
+		setCon();
 		int pid = this.getPid();
+		Bewerber bewerber = null;
+		ResultSet rs = null;
+		PreparedStatement pSmt = null;
+		String sql = "SELECT * FROM Person INNER JOIN Bewerber on pid = bid where pid = " +pid;
+		
+		try{
+			pSmt = conn.prepareStatement(sql);
+			rs = pSmt.executeQuery();
+			if (!rs.next()){
+				System.out.println("Our candidate wasn't found in the DB");
+			}else{
+				Anrede anrede = Anrede.valueOf(rs.getString("anrede"));
+				String name = rs.getString("name");
+				String vorname = rs.getString("vorname");
+				Date geburtsdatum = rs.getDate("geburtsdatum");
+				String telefonnummer = rs.getString("telefonnummer");
+				String eMail = rs.getString("emailAdresse");
+				Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
+				Haertefall haertefall = Haertefall.valueOf(rs.getString("haertefall"));
+				Double nc = rs.getDouble("nc");
+				SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
+						.valueOf(rs.getString("semesterbeitragBezahlt"));
+
+				bewerber = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studiengang, haertefall,
+						nc, semesterbeitragBezahlt);
+			}
+			
+		}catch(SQLException e){
+			System.out.println("Method getOurCandidate had some issues");
+			e.printStackTrace();
+		}
+		
+		return bewerber;
 
 	}
 
@@ -281,6 +354,9 @@ public class DBAccess {
 
 	return semesterbeitragBezahlt;
 	}
+	
+	
+	
 
 	// Delete-Methoden
 
@@ -288,7 +364,7 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM person WHERE pid =" + pId;
+			String sql = "DELETE FROM Person WHERE pid =" + pId;
 			pSmt = conn.prepareStatement(sql);
 			pSmt.executeQuery();
 		} catch (SQLException e) {
@@ -303,7 +379,7 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM bewerber WHERE bId =" + pId;
+			String sql = "DELETE FROM Bewerber WHERE bId =" + pId;
 			pSmt = conn.prepareStatement(sql);
 			pSmt.executeQuery();
 		} catch (SQLException e) {
@@ -317,7 +393,7 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM student WHERE sId =" + pId;
+			String sql = "DELETE FROM Student WHERE sId =" + pId;
 			pSmt = conn.prepareStatement(sql);
 			pSmt.executeQuery();
 		} catch (SQLException e) {
@@ -361,14 +437,14 @@ public class DBAccess {
 		return ncWerte;
 	}
 
-	public LinkedList<Bewerber> getZuSchlechteBewerber(Double letzterNcFuerZulassung) {
+	public LinkedList<Bewerber> getCandidatesWithInsufficientGrades(Double lastNcForAdmission) {
 
 		setCon();
-		LinkedList<Bewerber> schlechteBewerberListe = new LinkedList<Bewerber>();
-		Bewerber bewerber = null;
+		LinkedList<Bewerber> listOfCandidatesWithInsufficientGrades = new LinkedList<Bewerber>();
+		Bewerber candidate = null;
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
-		String sql = "SELECT * FROM Person INNER JOIN Bewerber WHERE nc > letzterNcFuerZulassung";
+		String sql = "SELECT * FROM Person INNER JOIN Bewerber WHERE nc > " + lastNcForAdmission;
 
 		try {
 			setCon();
@@ -377,15 +453,16 @@ public class DBAccess {
 
 			if (!rs.next()) {
 
-				// Bewerber in nächste Phase lassen?
+				System.out.println("All candiadtes get the admission");
 
 			} else {
 
 				while (rs.next()) {
 					int pid = rs.getInt("pid");
+					Anrede anrede = Anrede.valueOf(rs.getString("anrede"));
 					String name = rs.getString("name");
 					String vorname = rs.getString("vorname");
-					int alter = rs.getInt("alterJahre");
+					Date geburtsdatum = rs.getDate("geburtsdatum");
 					String telefonnummer = rs.getString("telefonnummer");
 					String eMail = rs.getString("emailAdresse");
 					Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
@@ -394,21 +471,21 @@ public class DBAccess {
 					SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
 							.valueOf(rs.getString("semesterbeitragBezahlt"));
 
-					bewerber = new Bewerber(name, vorname, alter, pid, telefonnummer, eMail, studiengang, haertefall,
+					candidate = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studiengang, haertefall,
 							nc, semesterbeitragBezahlt);
 
-					schlechteBewerberListe.add(bewerber);
+					listOfCandidatesWithInsufficientGrades.add(candidate);
 
 				}
 			}
 
 		} catch (SQLException e) {
-			System.out.println("getZuSchlechteBewerber konnte nciht ausgeführt werden");
+			System.out.println("getCandidatesWithInsufficientGrades couldn't be executed");
 			e.printStackTrace();
 		}
 		closeCon();
 
-		return schlechteBewerberListe;
+		return listOfCandidatesWithInsufficientGrades;
 
 	}
 

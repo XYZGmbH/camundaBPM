@@ -3,6 +3,7 @@ package BelegaufgabeMAS.BewerbungHochschule;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
+import domain.Bewerber;
 import utils.DBAccess;
 import utils.SemesterbeitragBezahlt;
 
@@ -18,19 +19,19 @@ public class CheckPayment implements JavaDelegate{
 	
 	public boolean checkIfPayed(){
 		
-		boolean bezahlt;
+		boolean paid;
 		
-		//Bewerber bewerber = 
+		Bewerber candidate = DBAccess.getInstance().getOurCandidate();
 		
-		SemesterbeitragBezahlt semesterbeitragBezahlt = DBAccess.getInstance().einzahlungPruefen(bewerber);
+		SemesterbeitragBezahlt tuitionFee = DBAccess.getInstance().einzahlungPruefen(candidate);
 		
-		if (semesterbeitragBezahlt == SemesterbeitragBezahlt.j ){
-			bezahlt = true;
+		if (tuitionFee == SemesterbeitragBezahlt.j ){
+			paid = true;
 		}else {
-			bezahlt = false;
+			paid = false;
 		}
 		
-		return bezahlt;
+		return paid;
 		
 	}
 	
