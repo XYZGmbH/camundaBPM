@@ -9,7 +9,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 import domain.Bewerber;
 import utils.DBAccess;
-import utils.Haertefall;
+
 
 public class CompareNc implements JavaDelegate{
 	
@@ -17,7 +17,11 @@ public class CompareNc implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
-	//Wie Boolean weitergeben?	unserBewerberImNcVergleich(20, 0.15);
+
+		
+
+		//Anzahl Leute pro Studiengang, 0.3 Quote für Härtefälle, hier 30 Prozent
+		 execution.setVariable("ncPassend", unserBewerberImNcVergleich(20, 0.3));
 		
 		
 	
@@ -30,15 +34,20 @@ public class CompareNc implements JavaDelegate{
 	public boolean unserBewerberImNcVergleich(int anzahlStuediengangsplaetze, double haertefallquote) {
 
 		Bewerber ourCandidate = DBAccess.getInstance().getOurCandidate();
+		
+		
 		boolean continueProcess = true;
 
 		LinkedList<Double> ncWerte = DBAccess.getInstance().getAlleNcs();
 		double letzterNcZulassung = getLetzterNcFuerZulassung(anzahlStuediengangsplaetze, ncWerte);
 
+		
 		if (ourCandidate.getNc() > letzterNcZulassung) {
-			if (ourCandidate.getHaertefall() == Haertefall.zero) {
+			if (ourCandidate.getHaertefall() == 0) {
 				continueProcess = false;
+				
 			} else {
+				
 				LinkedList<Bewerber> schlechteBewerberListe = DBAccess.getInstance().getCandidatesWithInsufficientGrades(letzterNcZulassung);
 				LinkedList<Double> ncsHaertefaelle = getNcsVonHaertefaellen(schlechteBewerberListe);
 				Double schlechtesterHaertefallNc = getLetzterNcHaertefaelle(haertefallquote, anzahlStuediengangsplaetze,
@@ -76,7 +85,8 @@ public class CompareNc implements JavaDelegate{
 
 		if (anzahlStuediengangsplaetze <= ncWerte.size()) {
 
-			letzterNc = ncWerte.get(anzahlStuediengangsplaetze);
+			letzterNc = ncWerte.get(anzahlStuediengangsplaetze-1);
+			System.out.println("Letzter Nc: " +letzterNc);
 
 		} else {
 			letzterNc = 5;
@@ -89,8 +99,10 @@ public class CompareNc implements JavaDelegate{
 
 		LinkedList<Double> ncsVonHaertefaellen = new LinkedList<Double>();
 		for (Bewerber bewerber : schlechteBewerberListe) {
-			if (!(bewerber.getHaertefall() == Haertefall.zero)) {
+			if (!(bewerber.getHaertefall() == 0)) {
+				
 				double nc = bewerber.getNc();
+				
 				ncsVonHaertefaellen.add(nc);
 			}
 		}
@@ -118,17 +130,7 @@ public class CompareNc implements JavaDelegate{
 
 	
 	
-	// public LinkedList<Bewerber>getSchelcheteBewerberAberHaertefall(LinkedList <Bewerber>schlechteBewerberListe) {
-	// LinkedList <Bewerber> schlechteBewerberAberHaertefallListe = new
-	// LinkedList <Bewerber>();
-	// for (Bewerber bewerber : schlechteBewerberListe){
-	// if (!(bewerber.getHaertefall() == Haertefall.zero)){
-	// schlechteBewerberAberHaertefallListe.add(bewerber);
-	// }
-	// }
-	// return schlechteBewerberAberHaertefallListe;
-	//
-	// }
+	
 	
 	
 	

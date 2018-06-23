@@ -81,7 +81,7 @@ public class DBAccess {
 	public void insertIntoStudent(String matrikelNummer, String versichertennummer) {
 		setCon();
 
-		String sql = "INSERT INTO STUDENT (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
+		String sql = "INSERT INTO Student (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
@@ -104,14 +104,14 @@ public class DBAccess {
 		closeCon();
 	}
 
-	public void insertIntoBewerber(String haertefall, double nc) {
+	public void insertIntoBewerber(double haertefall, double nc) {
 		setCon();
 
 		String sql = "INSERT INTO Bewerber (BID, Haertefall, NC, SemesterbeitragBezahlt) " + "values (?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
-			ps.setString(2, haertefall);
+			ps.setDouble(2, haertefall);
 			ps.setDouble(3, nc);
 			ps.setString(4, SemesterbeitragBezahlt.n.toString());
 
@@ -163,15 +163,16 @@ public class DBAccess {
 	}
 
 	
-	
+	/////???????????
 	public void insertIntoBankdaten(String Bic, String iban) {
 	setCon();
 
-	String sql = "INSERT INTO Bankdaten (Bic, Iban) values (?,?)";
+	String sql = "INSERT INTO Bankdaten (BankId, Bic, Iban) values (?,?,?)";
 
 	try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-		ps.setString(1, Bic);
-		ps.setString(2, iban);
+		ps.setInt(1, this.getPid());
+		ps.setString(2, Bic);
+		ps.setString(3, iban);
 		
 
 		try {
@@ -196,52 +197,32 @@ public class DBAccess {
 	
 	
 	
-//	public void insertIntoAdresse(String Adresszeile1, String Adresszeile2, String plz, String ort) {
-//		setCon();
-//
-//		String sql = "insert into Adresse (Adresszeile1, Adresszeile2, plz, ort) values (?,?,?,?)";
-//
-//		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-//			ps.setString(1, Adresszeile1);
-//			ps.setString(2, Adresszeile2);
-//			ps.setString(3, plz);
-//			ps.setString(4, ort);
-//
-//			try {
-//				ps.executeUpdate();
-//				System.out.println("Adresse inserted");
-//			} catch (SQLException e1) {
-//				System.out.println("Unable to execute update");
-//				e1.printStackTrace();
-//			}
-//
-//		} catch (SQLException e) {
-//			System.out.println("Unable to prepare Statement");
-//			e.printStackTrace();
-//		}
-//
-//		closeCon();
-//	}
+
 
 	private int getPid() {
 
+		setCon();
+		
+		ResultSet rs = null;
+		PreparedStatement pSmt = null;
+		int pid =0;
 		String sql = "SELECT MAX(pid) from Person";
+		try{
+			pSmt = conn.prepareStatement(sql);
+			rs = pSmt.executeQuery();
+			
+			if(!rs.next()){
+				System.out.println("no person in DB");
+			}else {
+				pid = rs.getInt(1);
 
-		try (Statement s = conn.createStatement()) {
-			try (ResultSet rs = s.executeQuery(sql)) {
-				return rs.getInt(1);
+			}
+			}catch(SQLException e){
 
-			} catch (SQLException e1) {
-				System.out.println("Unable to execute Statement");
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
 
-		} catch (SQLException e) {
-			System.out.println("Unable to create Statement");
-			e.printStackTrace();
-		}
-
-		return 1;
+		return pid;
 	}
 
 	private void setCon() {
@@ -306,7 +287,7 @@ public class DBAccess {
 				String telefonnummer = rs.getString("telefonnummer");
 				String eMail = rs.getString("emailAdresse");
 				Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
-				Haertefall haertefall = Haertefall.valueOf(rs.getString("haertefall"));
+				double haertefall = rs.getDouble(("haertefall"));
 				Double nc = rs.getDouble("nc");
 				SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
 						.valueOf(rs.getString("semesterbeitragBezahlt"));
@@ -366,7 +347,7 @@ public class DBAccess {
 			PreparedStatement pSmt = null;
 			String sql = "DELETE FROM Person WHERE pid =" + pId;
 			pSmt = conn.prepareStatement(sql);
-			pSmt.executeQuery();
+			pSmt.execute();
 		} catch (SQLException e) {
 			System.out.println("Delete from person konnte nicht ausgeführt werden");
 			e.printStackTrace();
@@ -375,13 +356,13 @@ public class DBAccess {
 
 	}
 
-	public void deleteFromBewerber(int pId) {
+	public void deleteFromBewerber() {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM Bewerber WHERE bid =" + pId;
+			String sql = "DELETE FROM Bewerber WHERE bid =" + this.getPid();
 			pSmt = conn.prepareStatement(sql);
-			pSmt.executeQuery();
+			pSmt.execute();
 		} catch (SQLException e) {
 			System.out.println("Delete from bewerber konnte nicht ausgeführt werden");
 			e.printStackTrace();
@@ -395,7 +376,7 @@ public class DBAccess {
 			PreparedStatement pSmt = null;
 			String sql = "DELETE FROM Student WHERE sId =" + pId;
 			pSmt = conn.prepareStatement(sql);
-			pSmt.executeQuery();
+			pSmt.execute();
 		} catch (SQLException e) {
 			System.out.println("Delete from student konnte nicht ausgeführt werden");
 			e.printStackTrace();
@@ -466,7 +447,7 @@ public class DBAccess {
 					String telefonnummer = rs.getString("telefonnummer");
 					String eMail = rs.getString("emailAdresse");
 					Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
-					Haertefall haertefall = Haertefall.valueOf(rs.getString("haertefall"));
+					double haertefall = rs.getDouble("haertefall");
 					Double nc = rs.getDouble("nc");
 					SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
 							.valueOf(rs.getString("semesterbeitragBezahlt"));

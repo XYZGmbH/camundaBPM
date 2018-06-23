@@ -12,7 +12,8 @@ public class CheckPayment implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
-		
+		//weiß nicht, ob es so funktioniert
+		execution.setVariable("paid", checkIfPayed());
 		
 	}
 

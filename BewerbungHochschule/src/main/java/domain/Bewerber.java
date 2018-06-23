@@ -3,21 +3,21 @@ package domain;
 import java.util.Date;
 
 import utils.Anrede;
-import utils.Haertefall;
+
 import utils.SemesterbeitragBezahlt;
 import utils.Studiengang;
 
 public class Bewerber extends Person {
 
 	public Bewerber(Anrede anrede, String name, String vorname, Date geburtsdatum, int pid, String telefonnummer, String email,
-			Studiengang studiengang, Haertefall haertefall, double nc, SemesterbeitragBezahlt semesterbeitragBezahlt) {
+			Studiengang studiengang, double haertefall, double nc, SemesterbeitragBezahlt semesterbeitragBezahlt) {
 		super(anrede, name, vorname, geburtsdatum, pid, telefonnummer, email, studiengang);
 		this.haertefall = haertefall;
 		this.nc = nc;
 		this.semesterbeitragBezahlt = semesterbeitragBezahlt;
 	}
 
-	private Haertefall haertefall;
+	private double haertefall;
 	private double nc;
 	private SemesterbeitragBezahlt semesterbeitragBezahlt;
 
@@ -33,11 +33,11 @@ public class Bewerber extends Person {
 		this.semesterbeitragBezahlt = semesterbeitragBezahlt;
 	}
 
-	public Haertefall getHaertefall() {
+	public double getHaertefall() {
 		return haertefall;
 	}
 
-	public void setHaertefall(Haertefall haertefall) {
+	public void setHaertefall(double haertefall) {
 		this.haertefall = haertefall;
 	}
 

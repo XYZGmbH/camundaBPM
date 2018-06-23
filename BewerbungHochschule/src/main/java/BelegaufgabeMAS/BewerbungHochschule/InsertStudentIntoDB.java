@@ -17,6 +17,7 @@ public class InsertStudentIntoDB implements JavaDelegate {
 		
 		DBAccess.getInstance().insertIntoBankdaten(bic, iban);
 		DBAccess.getInstance().insertIntoStudent(this.generateMatrikelnummer(), versichertennummer);
+		DBAccess.getInstance().deleteFromBewerber();
 		
 	}
 	
