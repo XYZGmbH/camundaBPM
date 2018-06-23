@@ -1,32 +1,49 @@
 package domain;
 
 import utils.Haertefall;
+import utils.SemesterbeitragBezahlt;
 import utils.Studiengang;
 
-public class Bewerber extends Person{
+public class Bewerber extends Person {
 
 	public Bewerber(String name, String vorname, int alter, int pid, String telefonnummer, String email,
-			Studiengang studiengang, Haertefall haertefall, double nc) {
+			Studiengang studiengang, Haertefall haertefall, double nc, SemesterbeitragBezahlt semesterbeitragBezahlt) {
 		super(name, vorname, alter, pid, telefonnummer, email, studiengang);
 		this.haertefall = haertefall;
 		this.nc = nc;
+		this.semesterbeitragBezahlt = semesterbeitragBezahlt;
 	}
 
 	private Haertefall haertefall;
 	private double nc;
-	
-	
+	private SemesterbeitragBezahlt semesterbeitragBezahlt;
+
+	public void setNc(double nc) {
+		this.nc = nc;
+	}
+
+	public SemesterbeitragBezahlt getSemesterbeitragBezahlt() {
+		return semesterbeitragBezahlt;
+	}
+
+	public void setSemesterbeitragBezahlt(SemesterbeitragBezahlt semesterbeitragBezahlt) {
+		this.semesterbeitragBezahlt = semesterbeitragBezahlt;
+	}
+
 	public Haertefall getHaertefall() {
 		return haertefall;
 	}
+
 	public void setHaertefall(Haertefall haertefall) {
 		this.haertefall = haertefall;
 	}
+
 	public double getNc() {
 		return nc;
 	}
+
 	public void setNc(int nc) {
 		this.nc = nc;
 	}
-	
+
 }

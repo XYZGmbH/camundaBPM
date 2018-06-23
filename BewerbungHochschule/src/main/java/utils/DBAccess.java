@@ -23,7 +23,7 @@ public class DBAccess{
 	
 	//methods
 	//String name, String vorname, int alter, int pid, String telefonnummer, String email,
-	//Studiengang studiengang, Haertefall haertefall, double nc
+	//Studiengang studiengang, Haertefall haertefall, double nc, 
 	public LinkedList<Bewerber> getBewerber(){
 		setCon();
 		
@@ -37,7 +37,7 @@ public class DBAccess{
 					ResultSet personAtr = this.getPerson(bid);
 					Bewerber b = new Bewerber(personAtr.getString(2), personAtr.getString(3),
 							personAtr.getInt(4), personAtr.getInt(1), personAtr.getString(5), 
-							personAtr.getString(6), Studiengang.valueOf(personAtr.getString(7)), null, 0);
+							personAtr.getString(6), Studiengang.valueOf(personAtr.getString(7)), null, 0, SemesterbeitragBezahlt.n);
 					
 					if(personAtr.getObject(8) != null) {
 						
@@ -75,15 +75,15 @@ public class DBAccess{
 		return rsReal;
 	}
 	
-	public void insertIntoStudent(String matrikelNummer, SemesterbeitragBezahlt beitragBezahlt) {
+	public void insertIntoStudent(String matrikelNummer) {
 		setCon();
 		
-		String sql = "insert into student (SID, Matrikelnummer, SemesterbeitragBezahlt) values (?,?,?)";
+		String sql = "insert into student (SID, Matrikelnummer) values (?,?)";
 		
 		try(PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
 			ps.setString(2, matrikelNummer);
-			ps.setString(3, beitragBezahlt.toString());
+			
 			
 			try {
 				ps.executeUpdate();
@@ -363,9 +363,10 @@ public class DBAccess{
 					Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
 					Haertefall haertefall = Haertefall.valueOf(rs.getString("haertefall"));
 					Double nc = rs.getDouble("nc");
+					SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt.valueOf(rs.getString("semesterbeitragBezahlt"));
 
 					bewerber = new Bewerber(name, vorname, alter, pid, telefonnummer, eMail, studiengang, haertefall,
-							nc);
+							nc, semesterbeitragBezahlt);
 
 					schlechteBewerberListe.add(bewerber);
 
