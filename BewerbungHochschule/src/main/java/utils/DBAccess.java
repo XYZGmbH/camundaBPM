@@ -60,7 +60,7 @@ public class DBAccess {
 
 	public ResultSet getPerson(int pid) {
 		setCon();
-		String sql = "select * from 'Person' where 'pid' = ?";
+		String sql = "SELECT * from Person where pid = ?";
 		ResultSet rsReal = null;
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, pid);
@@ -81,7 +81,7 @@ public class DBAccess {
 	public void insertIntoStudent(String matrikelNummer, String versichertennummer) {
 		setCon();
 
-		String sql = "insert into student (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
+		String sql = "INSERT INTO STUDENT (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
@@ -107,7 +107,7 @@ public class DBAccess {
 	public void insertIntoBewerber(String haertefall, double nc) {
 		setCon();
 
-		String sql = "insert into bewerber (BID, Haertefall, NC, SemesterbeitragBezahlt) " + "values (?,?,?,?)";
+		String sql = "INSERT INTO Bewerber (BID, Haertefall, NC, SemesterbeitragBezahlt) " + "values (?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, this.getPid());
@@ -134,7 +134,7 @@ public class DBAccess {
 	public void insertIntoPerson(Anrede anrede, String name, String vorname, Date geburtsdatum, String telefonnummer, String email,
 			Studiengang studiengang) {
 		setCon();
-		String sql = "insert into person (Anrede, Name, Vorname, alterJahre, Telefonnummer, EmailAdresse, Studiengang) "
+		String sql = "INSERT INTO Person (Anrede, Name, Vorname, Geburtsdatum, Telefonnummer, EmailAdresse, Studiengang) "
 				+ "values (?,?,?,?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -225,7 +225,7 @@ public class DBAccess {
 
 	private int getPid() {
 
-		String sql = "select max(pid) from 'person'";
+		String sql = "SELECT MAX(pid) from Person";
 
 		try (Statement s = conn.createStatement()) {
 			try (ResultSet rs = s.executeQuery(sql)) {
@@ -379,7 +379,7 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM Bewerber WHERE bId =" + pId;
+			String sql = "DELETE FROM Bewerber WHERE bid =" + pId;
 			pSmt = conn.prepareStatement(sql);
 			pSmt.executeQuery();
 		} catch (SQLException e) {
