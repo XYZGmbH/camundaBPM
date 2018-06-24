@@ -1,49 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_0idzgqr" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0idzgqr" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="Decision_Bewerberquote_berechnen" name="Bewerberquote berechnen">
     <extensionElements>
       <biodi:bounds x="200" y="200" width="180" height="80" />
     </extensionElements>
     <decisionTable id="decisionTable_1" hitPolicy="COLLECT" aggregation="SUM">
-      <input id="input_1" label="Härtefallkategorien">
-        <inputExpression id="inputExpression_1" typeRef="string">
+      <input id="input_1" label="Studiengangswechsel" camunda:inputVariable="wechsel">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
           <text></text>
         </inputExpression>
-        <inputValues id="UnaryTests_1nruqhz">
-          <text><![CDATA["Studiengangs- /Hochschulwechsel","Zweitstudium","Kinder","Behinderung"]]></text>
-        </inputValues>
+      </input>
+      <input id="InputClause_07qdbs2" label="Zweitstudium" camunda:inputVariable="zweitStudium">
+        <inputExpression id="LiteralExpression_1ctc7pk" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ir455n" label="Kinder" camunda:inputVariable="kinder">
+        <inputExpression id="LiteralExpression_1wzctsm" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_02wdb7a" label="Behinderung" camunda:inputVariable="behinderung">
+        <inputExpression id="LiteralExpression_1dkm3t1" typeRef="boolean">
+          <text></text>
+        </inputExpression>
       </input>
       <output id="output_1" label="Ergebnis" name="bewerberquote" typeRef="double" />
       <rule id="DecisionRule_1pde8s0">
         <inputEntry id="UnaryTests_002l3tu">
-          <text><![CDATA["Studiengangs- /Hochschulwechsel"]]></text>
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08jsn7s">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jdqvw0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05ow57u">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0t5n4fy">
-          <text>0,05</text>
+          <text>0.05</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0e3lhho">
         <inputEntry id="UnaryTests_1rm6ycm">
-          <text><![CDATA["Zweitstudium"]]></text>
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kzia46">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jar5n1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oz85yl">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_16soywy">
-          <text>0,05</text>
+          <text>0.05</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1x12d84">
         <inputEntry id="UnaryTests_1si6xu5">
-          <text><![CDATA["Kinder"]]></text>
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0egbfrq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ks1itf">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gulx5j">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_02zo9vv">
-          <text>0,05</text>
+          <text>0.05</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0tjwndi">
         <inputEntry id="UnaryTests_0q3cben">
-          <text><![CDATA["Behinderung"]]></text>
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0s3bpli">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mmd7lp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ybaycd">
+          <text>true</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_120kj1t">
-          <text>0,05</text>
+          <text>0.05</text>
         </outputEntry>
       </rule>
     </decisionTable>

@@ -23,10 +23,10 @@
       <bpmn:incoming>SequenceFlow_063jxz5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1v48rbk</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P20S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT20S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:serviceTask id="Task_0mld0lh" name="Bewerber in Studierenden-datenbank eintragen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/InsertStudentIntoDB.java">
+    <bpmn:serviceTask id="Task_0mld0lh" name="Bewerber in Studierenden-datenbank eintragen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/InsertCandidateIntoDb.java">
       <bpmn:incoming>SequenceFlow_1ceiua4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1rwbpvp</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1v3abom">
