@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.slf4j.helpers.NOPLoggerFactory;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -53,6 +54,11 @@ public class CreateStudentCard implements JavaDelegate{
 		//Image background = null; 
 				
 		try {
+			NOPLoggerFactory iTextLoggerFactory = new NOPLoggerFactory();
+			com.itextpdf.kernel.log.DefaultCounter iText.IO.Log.LoggerFactory.BindFactory(iTextLoggerFactory);
+			
+			myCounter = new MyCounter(getClass());
+	        CounterFactory.getInstance().setCounter(myCounter);
 			ImageData image = ImageDataFactory.create("pics/studentPic2.png");
 			img = new Image(image);
 			//canvas.addImage(ImageDataFactory.create("./src/main/resources/pics/studentCardBackground.png" , com.itextpdf. , false);
