@@ -146,6 +146,10 @@
       <bpmn:outgoing>SequenceFlow_08w3ku8</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:callActivity id="CallActivity_1sxq7q9" name="Bewerber ablehnen" calledElement="subProcess">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1snms3f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dmb7nz</bpmn:outgoing>
     </bpmn:callActivity>
@@ -153,6 +157,10 @@
       <bpmn:incoming>SequenceFlow_1rhlzfq</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:callActivity id="Task_1afjl0s" name="Bewerber ablehnen" calledElement="subProcess">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_03tynks</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_02raa4a</bpmn:outgoing>
     </bpmn:callActivity>
