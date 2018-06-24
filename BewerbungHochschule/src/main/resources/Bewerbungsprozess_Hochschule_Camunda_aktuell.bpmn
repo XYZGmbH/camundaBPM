@@ -179,10 +179,10 @@
       <bpmn:messageEventDefinition />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_00oh13b" name="NC nicht passsend" sourceRef="ExclusiveGateway_0gugpu8" targetRef="CallActivity_1szyqig">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ncPassend==false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">absage</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0cqy1mx" name="NC passend" sourceRef="ExclusiveGateway_0gugpu8" targetRef="Task_0irmnio">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ncPassend==true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">zusage</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_17o876y" sourceRef="CallActivity_1szyqig" targetRef="IntermediateThrowEvent_0rz3cf0" />
     <bpmn:sequenceFlow id="SequenceFlow_1o8xubx" sourceRef="IntermediateThrowEvent_0rz3cf0" targetRef="EndEvent_00u9efs" />
