@@ -96,7 +96,7 @@
       <bpmn:incoming>SequenceFlow_0o2m7yd</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pehcpv</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Task_01o1qua" name="Bewerberdaten-formular ergänzen" camunda:formKey="embedded:app:forms/BewerberdatenformularErgaenzen.html">
+    <bpmn:userTask id="Task_01o1qua" name="Bewerberdaten-formular ergänzen" camunda:formKey="embedded:app:forms/BewerberdatenformularErgaenzen.html" camunda:assignee="demo">
       <bpmn:incoming>SequenceFlow_0c0006s</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_065lmsz</bpmn:outgoing>
     </bpmn:userTask>
@@ -110,11 +110,11 @@
       <bpmn:outgoing>SequenceFlow_0c0006s</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1snms3f</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_0og9wou" name="Versicherungs&#10;-nachweis&#10;prüfen" camunda:formKey="embedded:app:forms/VersicherungsausweisPruefen.html">
+    <bpmn:userTask id="Task_0og9wou" name="Versicherungs&#10;-nachweis&#10;prüfen" camunda:formKey="embedded:app:forms/VersicherungsausweisPruefen.html" camunda:assignee="demo">
       <bpmn:incoming>SequenceFlow_0nqai40</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_07t3as8</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_0cdfg9j" name="Bewerbungs-unterlagen auf korrekte Inhalte prüfen" camunda:formKey="embedded:app:forms/BewerbungsunterkagenaufkorrekteInhaltepruefen.html">
+    <bpmn:userTask id="Task_0cdfg9j" name="Bewerbungs-unterlagen auf korrekte Inhalte prüfen" camunda:formKey="embedded:app:forms/BewerbungsunterkagenaufkorrekteInhaltepruefen.html" camunda:assignee="demo">
       <bpmn:incoming>SequenceFlow_0clv3gy</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1xz8j4y</bpmn:outgoing>
     </bpmn:userTask>

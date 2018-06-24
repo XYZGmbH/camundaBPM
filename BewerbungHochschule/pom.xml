@@ -179,20 +179,6 @@
         <artifactId>layout</artifactId>
         <version>7.1.2</version>
     </dependency>
-
-    <!-- only needed for forms -->
-    <dependency>
-        <groupId>com.itextpdf</groupId>
-        <artifactId>forms</artifactId>
-        <version>7.1.2</version>
-    </dependency>
-
-    <!-- only needed for PDF/A -->
-    <dependency>
-        <groupId>com.itextpdf</groupId>
-        <artifactId>pdfa</artifactId>
-        <version>7.1.2</version>
-    </dependency>
     
     <!-- needed for InMemoryH2Test -->
     <dependency>

@@ -15,7 +15,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.UnitValue;
-
+import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
 
@@ -37,7 +37,7 @@ public class CreateStudentCard implements JavaDelegate{
 	public boolean createCard(String vorname, String nachname, String geburtsdatum, String matrikelnummer, String studiengang) {
 		
 		PdfWriter pw = null;
-		String path = "./target/studentCard" + matrikelnummer + ".pdf";
+		String path = "C:/Users/Felix/studentCard" + matrikelnummer + ".pdf";
 		try {
 			pw = new PdfWriter(path);
 		} catch (FileNotFoundException e) {
@@ -53,10 +53,11 @@ public class CreateStudentCard implements JavaDelegate{
 		//Image background = null; 
 				
 		try {
-			img = new Image(ImageDataFactory.create("./src/main/resources/pics/studentPic2.png"));
+			ImageData image = ImageDataFactory.create("pics/studentPic2.png");
+			img = new Image(image);
 			//canvas.addImage(ImageDataFactory.create("./src/main/resources/pics/studentCardBackground.png" , com.itextpdf. , false);
 			//background = new Image(ImageDataFactory.create());
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
