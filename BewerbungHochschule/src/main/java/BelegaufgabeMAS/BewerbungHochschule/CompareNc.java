@@ -21,7 +21,15 @@ public class CompareNc implements JavaDelegate{
 		
 
 		//Anzahl Leute pro Studiengang, 0.3 Quote für Härtefälle, hier 30 Prozent
-		 execution.setVariable("ncPassend", unserBewerberImNcVergleich(20, 0.3));
+		 //execution.setVariable("ncPassend", unserBewerberImNcVergleich(20, 0.3));
+		
+		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3);
+		
+		if(ncPassend ==true){
+			execution.setVariable("type", "zusage");
+		}else{
+			execution.setVariable("type", "absage");
+		}
 		
 		
 	
