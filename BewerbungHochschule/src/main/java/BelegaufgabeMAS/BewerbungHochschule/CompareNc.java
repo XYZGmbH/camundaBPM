@@ -21,7 +21,10 @@ public class CompareNc implements JavaDelegate {
 
 		HashMap<String, Object> map = (HashMap<String, Object>) execution.getVariable("bewerberquote");
 		double bewerberquote = (double) map.get("bewerberquote");
-		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3, bewerberquote);
+		
+		int pid = (int) execution.getVariable("pid");
+		
+		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3, bewerberquote, pid);
 
 		
 		execution.setVariable("unterlagenKorrekt", false);
@@ -37,9 +40,9 @@ public class CompareNc implements JavaDelegate {
 	}
 
 	public boolean unserBewerberImNcVergleich(int anzahlStuediengangsplaetze, double haertefallquote,
-			double bewerberquote) {
+			double bewerberquote, int pid) {
 
-		Bewerber ourCandidate = DBAccess.getInstance().getOurCandidate();
+		Bewerber ourCandidate = DBAccess.getInstance().getOurCandidate(pid);
 
 		boolean continueProcess = true;
 

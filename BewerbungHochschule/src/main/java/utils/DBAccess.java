@@ -43,13 +43,13 @@ public class DBAccess {
 		return rsReal;
 	}
 
-	public void insertIntoStudent(String matrikelNummer, String versichertennummer) {
+	public void insertIntoStudent(String matrikelNummer, String versichertennummer, int pid) {
 		setCon();
 
 		String sql = "INSERT INTO Student (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			ps.setInt(1, this.getPid());
+			ps.setInt(1, pid);
 			ps.setString(2, matrikelNummer);
 			ps.setString(3, versichertennummer);
 
@@ -69,13 +69,13 @@ public class DBAccess {
 		closeCon();
 	}
 
-	public void insertIntoBewerber(double haertefall, double nc) {
+	public void insertIntoBewerber(double haertefall, double nc, int pid) {
 		setCon();
 
 		String sql = "INSERT INTO Bewerber (BID, Haertefall, NC, SemesterbeitragBezahlt) " + "values (?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			ps.setInt(1, this.getPid());
+			ps.setInt(1, pid);
 			ps.setDouble(2, haertefall);
 			ps.setDouble(3, nc);
 			ps.setString(4, SemesterbeitragBezahlt.n.toString());
@@ -129,13 +129,13 @@ public class DBAccess {
 
 	
 	/////???????????
-	public void insertIntoBankdaten(String Bic, String iban) {
+	public void insertIntoBankdaten(String Bic, String iban, int pid) {
 	setCon();
 
 	String sql = "INSERT INTO Bankdaten (BankId, Bic, Iban) values (?,?,?)";
 
 	try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-		ps.setInt(1, this.getPid());
+		ps.setInt(1, pid);
 		ps.setString(2, Bic);
 		ps.setString(3, iban);
 		
@@ -156,7 +156,7 @@ public class DBAccess {
 	closeCon();
 }
 
-	private int getPid() {
+	public int getPid() {
 
 		setCon();
 		
@@ -223,9 +223,8 @@ public class DBAccess {
 	
 	// Unseren Bewerber aus DB filtern
 
-	public Bewerber getOurCandidate() {
+	public Bewerber getOurCandidate(int pid) {
 		setCon();
-		int pid = this.getPid();
 		Bewerber bewerber = null;
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
@@ -313,7 +312,7 @@ public class DBAccess {
 
 	}
 
-	public void deleteFromBewerber() {
+	public void deleteFromBewerber(int pid) {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
