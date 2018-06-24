@@ -16,11 +16,11 @@
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="SequenceFlow_04yb9ov" sourceRef="ExclusiveGateway_0uoptlr" targetRef="Task_100maph" />
     <bpmn:sequenceFlow id="SequenceFlow_0ntwoy3" sourceRef="ExclusiveGateway_0uoptlr" targetRef="Task_01a76ed" />
-    <bpmn:serviceTask id="Task_100maph" name="Ablehnungsmail erstellen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/SendMail.java">
+    <bpmn:serviceTask id="Task_100maph" name="Ablehnungsmail erstellen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.SendMail">
       <bpmn:incoming>SequenceFlow_04yb9ov</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ll9rpe</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_01a76ed" name="Bewerber aus DB löschen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/DeleteCadidateFromDB.java">
+    <bpmn:serviceTask id="Task_01a76ed" name="Bewerber aus DB löschen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.DeleteCadidateFromDB">
       <bpmn:incoming>SequenceFlow_0ntwoy3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ye26v6</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0rmdfgo">

@@ -26,7 +26,7 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT20S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:serviceTask id="Task_0mld0lh" name="Bewerber in Studierenden-datenbank eintragen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/InsertCandidateIntoDb.java">
+    <bpmn:serviceTask id="Task_0mld0lh" name="Bewerber in Studierenden-datenbank eintragen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.InsertCandidateIntoDb">
       <bpmn:incoming>SequenceFlow_1ceiua4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1rwbpvp</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1v3abom">
@@ -34,7 +34,7 @@
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:dataStoreReference id="DataStoreReference_11col3z" name="Studierenden-datenbank" />
-    <bpmn:serviceTask id="Task_0kdabn5" name="NC-Werte vergleichen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/CompareNc.java">
+    <bpmn:serviceTask id="Task_0kdabn5" name="NC-Werte vergleichen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.CompareNc">
       <bpmn:incoming>SequenceFlow_1rwbpvp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ewsj1a</bpmn:outgoing>
       <bpmn:property id="Property_0phhwkv" name="__targetRef_placeholder" />
@@ -82,19 +82,19 @@
       <bpmn:outgoing>SequenceFlow_0aahrh4</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1mz6h52</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:serviceTask id="Task_0irmnio" name="Zusagemail erstellen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/SendMail.java">
+    <bpmn:serviceTask id="Task_0irmnio" name="Zusagemail erstellen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.SendMail">
       <bpmn:incoming>SequenceFlow_0cqy1mx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_04157hw</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:dataStoreReference id="DataStoreReference_0pvwnhp" name="Studierenden-datenbank" />
-    <bpmn:serviceTask id="Task_0pjz3d4" name="Studierenden in Datenbank eintragen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/InsertStudentIntoDB.java">
+    <bpmn:serviceTask id="Task_0pjz3d4" name="Studierenden in Datenbank eintragen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.InsertStudentIntoDB">
       <bpmn:incoming>SequenceFlow_1ifsq87</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_10ngnzw</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0wyjzdr">
         <bpmn:targetRef>DataStoreReference_0pvwnhp</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_15z9v4m" name="Studierenden&#10;-ausweis erstellen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/CreateStudentCard.java">
+    <bpmn:serviceTask id="Task_15z9v4m" name="Studierenden&#10;-ausweis erstellen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.CreateStudentCard">
       <bpmn:incoming>SequenceFlow_0o2m7yd</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pehcpv</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -131,7 +131,7 @@
       <bpmn:outgoing>SequenceFlow_0clv3gy</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0nqai40</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:serviceTask id="Task_10yvpd2" name="Semester&#10;-beitrags&#10;-einzahlung &#10;prüfen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/CheckPayment.java">
+    <bpmn:serviceTask id="Task_10yvpd2" name="Semester&#10;-beitrags&#10;-einzahlung &#10;prüfen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.CheckPayment">
       <bpmn:incoming>SequenceFlow_1c8zlj9</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11yhnjc</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -170,7 +170,7 @@
       <bpmn:incoming>SequenceFlow_1pehcpv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1v3bqpg</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:serviceTask id="Task_1qs8sm3" name="Bestätigungs- mail erstellen" camunda:class="/BewerbungHochschule/src/main/java/BelegaufgabeMAS/BewerbungHochschule/SendMail.java">
+    <bpmn:serviceTask id="Task_1qs8sm3" name="Bestätigungs- mail erstellen" camunda:class="BelegaufgabeMAS.BewerbungHochschule.SendMail">
       <bpmn:incoming>SequenceFlow_1v3bqpg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0qag8ml</bpmn:outgoing>
     </bpmn:serviceTask>
