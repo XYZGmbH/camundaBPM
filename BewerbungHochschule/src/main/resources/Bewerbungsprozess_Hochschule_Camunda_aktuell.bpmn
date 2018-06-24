@@ -54,6 +54,10 @@
       <bpmn:outgoing>SequenceFlow_00oh13b</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="CallActivity_1szyqig" name="Bewerber ablehnen" calledElement="subProcess">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_00oh13b</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17o876y</bpmn:outgoing>
     </bpmn:callActivity>
