@@ -53,7 +53,7 @@
       <bpmn:outgoing>SequenceFlow_0cqy1mx</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_00oh13b</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:callActivity id="CallActivity_1szyqig" name="Bewerber ablehnen" calledElement="bewerberAblehnen">
+    <bpmn:callActivity id="CallActivity_1szyqig" name="Bewerber ablehnen" calledElement="subProcess">
       <bpmn:incoming>SequenceFlow_00oh13b</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17o876y</bpmn:outgoing>
     </bpmn:callActivity>
@@ -69,7 +69,7 @@
       <bpmn:incoming>SequenceFlow_0aahrh4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_03tynks</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0wossut" name="Zusage versenden">
@@ -141,14 +141,14 @@
       <bpmn:incoming>SequenceFlow_1xz8j4y</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08w3ku8</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:callActivity id="CallActivity_1sxq7q9" name="Bewerber ablehnen" calledElement="bewerberAblehnen">
+    <bpmn:callActivity id="CallActivity_1sxq7q9" name="Bewerber ablehnen" calledElement="subProcess">
       <bpmn:incoming>SequenceFlow_1snms3f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dmb7nz</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:endEvent id="EndEvent_0extkud" name="Ablehnung versendet">
       <bpmn:incoming>SequenceFlow_1rhlzfq</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:callActivity id="Task_1afjl0s" name="Bewerber ablehnen" calledElement="bewerberAblehnen">
+    <bpmn:callActivity id="Task_1afjl0s" name="Bewerber ablehnen" calledElement="subProcess">
       <bpmn:incoming>SequenceFlow_03tynks</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_02raa4a</bpmn:outgoing>
     </bpmn:callActivity>

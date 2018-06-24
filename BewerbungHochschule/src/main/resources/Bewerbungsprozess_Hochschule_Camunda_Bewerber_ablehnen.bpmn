@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0t9u4k2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.15.1">
   <bpmn:collaboration id="bewerberAblehnen">
-    <bpmn:participant id="Participant_13rea22" name="Immatrikulationsamt" processRef="subProcess" />
+    <bpmn:participant id="bewerberAb" name="Immatrikulationsamt" processRef="subProcess" />
     <bpmn:participant id="Participant_0o15dje" name="Bewerber" />
   </bpmn:collaboration>
-  <bpmn:process id="subProcess" isExecutable="true">
+  <bpmn:process id="subProcess" name="bewerberAblehnen" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0syqyz2</bpmn:outgoing>
     </bpmn:startEvent>
@@ -42,7 +42,7 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bewerberAblehnen">
-      <bpmndi:BPMNShape id="Participant_13rea22_di" bpmnElement="Participant_13rea22">
+      <bpmndi:BPMNShape id="Participant_13rea22_di" bpmnElement="bewerberAb">
         <dc:Bounds x="81" y="52" width="615" height="332" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
