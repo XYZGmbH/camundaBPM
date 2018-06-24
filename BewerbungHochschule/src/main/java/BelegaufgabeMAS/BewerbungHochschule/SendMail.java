@@ -3,10 +3,13 @@ package BelegaufgabeMAS.BewerbungHochschule;
 import java.io.File;
 import java.util.HashMap;
 
+import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
+import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.runtime.MessageCorrelationResult;
 
 import io.FileReaderEmail;
 
@@ -38,13 +41,19 @@ public class SendMail implements JavaDelegate{
 		if(type.equalsIgnoreCase("zusage") || type.equalsIgnoreCase("absage")) {
 			mail = this.createEmail(emailParts.get("body"), emailParts.get("subject"), email);
 		}else {
-			mail = this.createEmail(emailParts.get("body"), emailParts.get("subject"), email, new File("./target/studentCard" + matrikelnummer + ".pdf"));
+			File f = new File("./target/studentCard" + matrikelnummer + ".pdf");
+			EmailAttachment attach = new EmailAttachment();
+			attach.setPath(f.getPath());
+			attach.setDisposition(EmailAttachment.ATTACHMENT);
+			attach.setDescription("Logs");
+			attach.setName(f.getName());
+			mail = this.createEmail(emailParts.get("body"), emailParts.get("subject"), email, attach);
 		}
 		
 		return mail.send();
 	}
 	
-	public MultiPartEmail createEmail (String mailtext, String subject, String toEmail, File f) throws EmailException {
+	public MultiPartEmail createEmail (String mailtext, String subject, String toEmail, EmailAttachment f) throws EmailException {
 		MultiPartEmail email = this.createEmail(mailtext, subject, toEmail);
 		email.attach(f);
 		return email;
@@ -62,7 +71,7 @@ public class SendMail implements JavaDelegate{
 //		email.addTo(toEmail);
 //		email.setFrom("XXXXXX@gmx.de");
 		email.setHostName("mail.htw-berlin.de");
-		email.setAuthentication("", "");
+	//	email.setAuthentication();
 		email.addTo(toEmail);
 		email.setFrom("s0561126@htw-berlin.de");
 		email.setSubject(subject);

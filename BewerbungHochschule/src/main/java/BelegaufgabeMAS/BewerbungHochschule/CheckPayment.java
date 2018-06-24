@@ -13,7 +13,9 @@ public class CheckPayment implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 
 		int pid = (int) execution.getVariable("pid");
+		DBAccess.getInstance().setPaid(pid);
 		execution.setVariable("paid", checkIfPayed(pid));
+		execution.setVariable("unterlagenKorrekt", true);
 		
 	}
 

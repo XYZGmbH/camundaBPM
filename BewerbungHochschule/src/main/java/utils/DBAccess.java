@@ -76,7 +76,9 @@ public class DBAccess {
 		PreparedStatement pSmt = null;
 		
 		try{
-			pSmt = conn.prepareStatement("UPDATE Bewerber SET SemesterbeitragBezahlt = "+ SemesterbeitragBezahlt.j.toString() + " WHERE pid= "+pid);
+			pSmt = conn.prepareStatement("UPDATE Bewerber SET SemesterbeitragBezahlt = ? WHERE bid= ?");
+			pSmt.setString(1, SemesterbeitragBezahlt.j.toString());
+			pSmt.setInt(2, pid);
 			pSmt.executeUpdate();
 		}catch (SQLException e ){
 			System.out.println("Unable to execute setPaid");
