@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -12,18 +14,14 @@ public class FileReaderEmail {
 
 	public LinkedList<String> getEmailRows(String applicationStatus) {
 		
-		File f = new File("src/main/resources/templates/emailTempl" + applicationStatus + ".txt");
+		//File f = new File("templates/emailTempl" + applicationStatus + ".txt");
+		InputStream inS = FileReaderEmail.class.getResourceAsStream("/templates/emailTempl" + applicationStatus + ".txt");
 		BufferedReader in = null;
 		String zeile = null;
 		
 		LinkedList<String> emailRows = new LinkedList<String>();
 		
-		try {
-			in = new BufferedReader(new FileReader(f));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		in = new BufferedReader(new InputStreamReader(inS));
 		
 		try {
 			while((zeile = in.readLine()) != null) {

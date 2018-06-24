@@ -2,6 +2,7 @@ package BelegaufgabeMAS.BewerbungHochschule;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -18,17 +19,18 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 
 	
 	Anrede anrede = Anrede.valueOf((String) execution.getVariable("anrede"));
-	String name = (String) execution.getVariable("name");
+	String name = (String) execution.getVariable("nachname");
 	String vorname = (String) execution.getVariable("vorname");
 	String geburtsdatumString = (String) execution.getVariable("geburtsdatum");
 	String rufnummer = (String) execution.getVariable("rufnummer");
 	String eMail = (String) execution.getVariable("email");
-	Studiengang studienfach = Studiengang.valueOf((String) execution.getVariable("studienfach"));
+	Studiengang studienfach = Studiengang.valueOf((String) execution.getVariable("Studienfach"));
 	double nc = (double) execution.getVariable("nc");
-	double bewerberquote = (double) execution.getVariable("bewerberquote");
+	HashMap<String, Object> map = (HashMap<String, Object>) execution.getVariable("bewerberquote");
+	double bewerberquote = (double) map.get("bewerberquote");
 	
 	
-	Date geburtsdatum = sdfToDate.parse(geburtsdatumString);
+	Date geburtsdatum = new SimpleDateFormat("dd.MM.yyyy").parse(geburtsdatumString);
 	DBAccess.getInstance().insertIntoPerson(anrede, name, vorname, new java.sql.Date(geburtsdatum.getTime()), rufnummer, eMail, studienfach);
 	DBAccess.getInstance().insertIntoBewerber(bewerberquote, nc);
 	
@@ -36,11 +38,6 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 	
 		
 	}
-	
-	SimpleDateFormat sdfToDate = new SimpleDateFormat(
-			"dd.MM.yyyy");
-	
-	
 	
 
 }
