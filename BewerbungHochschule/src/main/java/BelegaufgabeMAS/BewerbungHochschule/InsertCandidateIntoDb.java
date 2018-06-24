@@ -32,7 +32,10 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 	
 	Date geburtsdatum = new SimpleDateFormat("dd.MM.yyyy").parse(geburtsdatumString);
 	DBAccess.getInstance().insertIntoPerson(anrede, name, vorname, new java.sql.Date(geburtsdatum.getTime()), rufnummer, eMail, studienfach);
-	DBAccess.getInstance().insertIntoBewerber(bewerberquote, nc);
+	
+	int pid = DBAccess.getInstance().getPid();
+	execution.setVariable("pid", pid);
+	DBAccess.getInstance().insertIntoBewerber(bewerberquote, nc, pid);
 	
 	
 	
