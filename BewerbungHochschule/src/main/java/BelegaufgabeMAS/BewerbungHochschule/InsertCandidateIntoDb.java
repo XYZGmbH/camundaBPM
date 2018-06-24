@@ -17,13 +17,13 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 
 	
-	Anrede anrede = Anrede.valueOf(execution.getVariable("anrede").toString());
-	String name = execution.getVariable("name").toString();
-	String vorname = execution.getVariable("vorname").toString();
-	String geburtsdatumString = execution.getVariable("geburtsdatum").toString();
-	String rufnummer = execution.getVariable("rufnummer").toString();
-	String eMail = execution.getVariable("email").toString();
-	Studiengang studienfach = Studiengang.valueOf(execution.getVariable("studienfach").toString());
+	Anrede anrede = Anrede.valueOf((String) execution.getVariable("anrede"));
+	String name = (String) execution.getVariable("name");
+	String vorname = (String) execution.getVariable("vorname");
+	String geburtsdatumString = (String) execution.getVariable("geburtsdatum");
+	String rufnummer = (String) execution.getVariable("rufnummer");
+	String eMail = (String) execution.getVariable("email");
+	Studiengang studienfach = Studiengang.valueOf((String) execution.getVariable("studienfach"));
 	double nc = (double) execution.getVariable("nc");
 	double bewerberquote = (double) execution.getVariable("bewerberquote");
 	
