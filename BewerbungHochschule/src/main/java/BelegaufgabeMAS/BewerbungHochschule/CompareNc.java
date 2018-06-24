@@ -23,7 +23,8 @@ public class CompareNc implements JavaDelegate{
 		//Anzahl Leute pro Studiengang, 0.3 Quote für Härtefälle, hier 30 Prozent
 		 //execution.setVariable("ncPassend", unserBewerberImNcVergleich(20, 0.3));
 		
-		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3);
+		double bewerberquote = (double) execution.getVariable("bewerberquote");
+		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3, bewerberquote );
 		
 		if(ncPassend ==true){
 			execution.setVariable("type", "zusage");
@@ -39,7 +40,7 @@ public class CompareNc implements JavaDelegate{
 	
 	
 	
-	public boolean unserBewerberImNcVergleich(int anzahlStuediengangsplaetze, double haertefallquote) {
+	public boolean unserBewerberImNcVergleich(int anzahlStuediengangsplaetze, double haertefallquote, double bewerberquote) {
 
 		Bewerber ourCandidate = DBAccess.getInstance().getOurCandidate();
 		
@@ -60,7 +61,7 @@ public class CompareNc implements JavaDelegate{
 				LinkedList<Double> ncsHaertefaelle = getNcsVonHaertefaellen(schlechteBewerberListe);
 				Double schlechtesterHaertefallNc = getLetzterNcHaertefaelle(haertefallquote, anzahlStuediengangsplaetze,
 						ncsHaertefaelle);
-				if (ourCandidate.getNc() > schlechtesterHaertefallNc) {
+				if (ourCandidate.getNc() - bewerberquote  > schlechtesterHaertefallNc) {
 					continueProcess = false;
 				}
 

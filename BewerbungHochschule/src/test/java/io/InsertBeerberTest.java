@@ -34,9 +34,9 @@ public class InsertBeerberTest {
     
 	
 		DBAccess.getInstance().insertIntoPerson(Anrede.valueOf("Herr"), "Mustermann", "Max", new java.sql.Date(geburtsdatum.getTime()), "017621145249", "judith.hoegerl@gmail.de" , Studiengang.valueOf("Wirtschaftsinformatik"));
-		DBAccess.getInstance().insertIntoBewerber(0.15, 4.0);
+		DBAccess.getInstance().insertIntoBewerber(0.15, 1.0);
 		
-		boolean weiter =   compareNc.unserBewerberImNcVergleich(3, 0.8);
+		boolean weiter =   compareNc.unserBewerberImNcVergleich(3, 0.8, 0.15);
 	 System.out.println("Hier yo: " + weiter);
 	    
 	    boolean paid = checkPayment.checkIfPayed();
