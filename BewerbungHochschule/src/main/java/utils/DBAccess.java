@@ -156,14 +156,6 @@ public class DBAccess {
 
 	closeCon();
 }
-	
-	
-	
-	
-	
-	
-	
-
 
 	private int getPid() {
 

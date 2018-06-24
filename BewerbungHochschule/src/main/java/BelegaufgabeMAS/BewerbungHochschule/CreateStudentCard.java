@@ -40,7 +40,13 @@ public class CreateStudentCard implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution exec) throws Exception {
 		// TODO Auto-generated method stub
-		
+		String vorname = (String) exec.getVariable("vorname"), 
+				nachname = (String) exec.getVariable("nachname"),
+				matrikelnummer = (String) exec.getVariable("matrikelnummer"),
+				geburtsdatum  = (String) exec.getVariable("geburtsdatum"),
+				studiengang = (String) exec.getVariable("studiengang");
+		this.createCard(vorname, nachname, geburtsdatum, matrikelnummer, studiengang);
+		exec.setVariable("type", "bestaetigung");
 	}
 	
 
