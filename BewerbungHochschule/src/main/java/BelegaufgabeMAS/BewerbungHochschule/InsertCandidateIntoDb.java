@@ -1,5 +1,6 @@
 package BelegaufgabeMAS.BewerbungHochschule;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -19,7 +20,7 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 	Anrede anrede = Anrede.valueOf(execution.getVariable("anrede").toString());
 	String name = execution.getVariable("name").toString();
 	String vorname = execution.getVariable("vorname").toString();
-	Date geburtsdatum = (Date) execution.getVariable("geburtsdatum");
+	String geburtsdatumString = execution.getVariable("geburtsdatum").toString();
 	String rufnummer = execution.getVariable("rufnummer").toString();
 	String eMail = execution.getVariable("email").toString();
 	Studiengang studienfach = Studiengang.valueOf(execution.getVariable("studienfach").toString());
@@ -27,7 +28,8 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 	double bewerberquote = (double) execution.getVariable("bewerberquote");
 	
 	
-	DBAccess.getInstance().insertIntoPerson(anrede, name, vorname, geburtsdatum, rufnummer, eMail, studienfach);
+	Date geburtsdatum = sdfToDate.parse(geburtsdatumString);
+	DBAccess.getInstance().insertIntoPerson(anrede, name, vorname, new java.sql.Date(geburtsdatum.getTime()), rufnummer, eMail, studienfach);
 	DBAccess.getInstance().insertIntoBewerber(bewerberquote, nc);
 	
 	
@@ -35,6 +37,8 @@ public class InsertCandidateIntoDb implements JavaDelegate{
 		
 	}
 	
+	SimpleDateFormat sdfToDate = new SimpleDateFormat(
+			"dd.MM.yyyy");
 	
 	
 	
