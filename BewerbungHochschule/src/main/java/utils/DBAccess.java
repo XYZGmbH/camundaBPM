@@ -68,6 +68,21 @@ public class DBAccess {
 
 		closeCon();
 	}
+	
+	
+	
+	public void setPaid(int pid){
+		setCon();
+		PreparedStatement pSmt = null;
+		
+		try{
+			pSmt = conn.prepareStatement("UPDATE Bewerber SET SemesterbeitragBezahlt = "+ SemesterbeitragBezahlt.j.toString() + " WHERE pid= "+pid);
+			pSmt.executeUpdate();
+		}catch (SQLException e ){
+			System.out.println("Unable to execute setPaid");
+			e.printStackTrace();
+		}
+	}
 
 	public void insertIntoBewerber(double haertefall, double nc, int pid) {
 		setCon();
@@ -128,7 +143,7 @@ public class DBAccess {
 	}
 
 	
-	/////???????????
+	
 	public void insertIntoBankdaten(String Bic, String iban, int pid) {
 	setCon();
 
