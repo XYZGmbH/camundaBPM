@@ -51,14 +51,9 @@ public class CreateStudentCard implements JavaDelegate{
 		Document doc = new Document(pdfDoc, PageSize.A6.rotate());
 		
 		Image img = null;
-		//Image background = null; 
 				
 		try {
-			NOPLoggerFactory iTextLoggerFactory = new NOPLoggerFactory();
-			com.itextpdf.kernel.log.DefaultCounter iText.IO.Log.LoggerFactory.BindFactory(iTextLoggerFactory);
-			
-			myCounter = new MyCounter(getClass());
-	        CounterFactory.getInstance().setCounter(myCounter);
+
 			ImageData image = ImageDataFactory.create("pics/studentPic2.png");
 			img = new Image(image);
 			//canvas.addImage(ImageDataFactory.create("./src/main/resources/pics/studentCardBackground.png" , com.itextpdf. , false);

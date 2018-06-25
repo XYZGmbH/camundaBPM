@@ -15,11 +15,13 @@ public class InsertStudentIntoDB implements JavaDelegate {
 		String iban = execution.getVariable("iban").toString();
 		String bic = execution.getVariable("bic").toString();	
 		int pid = (int) execution.getVariable("pid");
+		String matrikelnummer = this.generateMatrikelnummer();
 		
-		DBAccess.getInstance().insertIntoStudent(this.generateMatrikelnummer(), versichertennummer, pid);
+		DBAccess.getInstance().insertIntoStudent(matrikelnummer, versichertennummer, pid);
 		DBAccess.getInstance().insertIntoBankdaten(bic, iban, pid);
 		DBAccess.getInstance().deleteFromBewerber(pid);
-	
+		
+		execution.setVariable("matrikelnummer", matrikelnummer);
 		
 	}
 	
