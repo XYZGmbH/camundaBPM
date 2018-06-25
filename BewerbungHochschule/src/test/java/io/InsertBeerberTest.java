@@ -3,10 +3,12 @@ package io;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 import BelegaufgabeMAS.BewerbungHochschule.CheckPayment;
 import BelegaufgabeMAS.BewerbungHochschule.CompareNc;
 import BelegaufgabeMAS.BewerbungHochschule.InsertStudentIntoDB;
+import domain.Bewerber;
 import utils.Anrede;
 import utils.DBAccess;
 
@@ -14,7 +16,7 @@ import utils.Studiengang;
 
 public class InsertBeerberTest {
 
-	public static void main(String[] args) throws ParseException {
+//	public static void main(String[] args) throws ParseException {
 //		SimpleDateFormat sdfToDate = new SimpleDateFormat(
 //				"dd.MM.yyyy");
 //		
@@ -28,26 +30,30 @@ public class InsertBeerberTest {
 //	    InsertStudentIntoDB insertStudentIntoDB = new InsertStudentIntoDB();
 //	    
 //		
-//		DBAccess.getInstance().insertIntoPerson(Anrede.valueOf("Herr"), "Doe", "John", new java.sql.Date(geburtsdatum.getTime()), "017621145249", "judith.hoegerl@gmail.de" , Studiengang.valueOf("Wirtschaftsinformatik"));
 //
-//		DBAccess.getInstance().insertIntoBewerber(0, 2.2);
-//    
-//	
-//		DBAccess.getInstance().insertIntoPerson(Anrede.valueOf("Herr"), "Mustermann", "Max", new java.sql.Date(geburtsdatum.getTime()), "017621145249", "judith.hoegerl@gmail.de" , Studiengang.valueOf("Wirtschaftsinformatik"));
-//		DBAccess.getInstance().insertIntoBewerber(0.15, 1.0);
-//		
-//		boolean weiter =   compareNc.unserBewerberImNcVergleich(3, 0.8, 0.15);
-//	 System.out.println("Hier yo: " + weiter);
 //	    
-//	    boolean paid = checkPayment.checkIfPayed();
-//	    System.out.println(paid);
-//	    
-//	    DBAccess.getInstance().insertIntoStudent(insertStudentIntoDB.generateMatrikelnummer(), "1234");
-//		DBAccess.getInstance().insertIntoBankdaten("BYLADEM1002", "DE12345678901234567891");
+//	    Studiengang studiengang = Studiengang.Angewandte_Informatik;
+//	    DBAccess.getInstance().insertIntoStudent(insertStudentIntoDB.generateMatrikelnummer(), "1234", studiengang);
+//	    int sid = DBAccess.getInstance().getSid();
+//		DBAccess.getInstance().insertIntoBankdaten("BYLADEM1002", "DE12345678901234567891", sid);
 //		
-//		DBAccess.getInstance().deleteFromBewerber();
-	    
-	    
-	}
+//		
+//		
+//		LinkedList <Double> ncs = new LinkedList <Double> ();
+//		ncs= DBAccess.getInstance().getAlleNcs(Studiengang.Wirtschaftsinformatik);
+//		for(Double he : ncs){
+//			System.out.println(he);
+//		}
+//		
+//		LinkedList <Bewerber> insufficintBewerber = new LinkedList <Bewerber>();
+//		insufficintBewerber=DBAccess.getInstance().getCandidatesWithInsufficientGrades(2.4, Studiengang.Wirtschaftsinformatik);
+//	    for(Bewerber bewerber : insufficintBewerber){
+//	    	System.out.println("insufBewerberNC "+ bewerber.getNc());
+//	    }
+//	    
+//	    boolean ncPassen = compareNc.unserBewerberImNcVergleich(20, 0.3, 0, 1,Studiengang.Wirtschaftsinformatik );
+//	    System.out.println(ncPassen);
+//	    
+//	}
 
 }

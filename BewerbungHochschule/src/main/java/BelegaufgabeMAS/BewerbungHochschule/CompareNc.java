@@ -10,6 +10,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 import domain.Bewerber;
 import utils.DBAccess;
+import utils.Studiengang;
 
 public class CompareNc implements JavaDelegate {
 
@@ -22,9 +23,10 @@ public class CompareNc implements JavaDelegate {
 		HashMap<String, Object> map = (HashMap<String, Object>) execution.getVariable("bewerberquote");
 		double bewerberquote = (double) map.get("bewerberquote");
 		
+		Studiengang studienfach = Studiengang.valueOf((String) execution.getVariable("Studienfach"));
 		int pid = (int) execution.getVariable("pid");
 		
-		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3, bewerberquote, pid);
+		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3, bewerberquote, pid, studienfach);
 
 		
 		execution.setVariable("unterlagenKorrekt", false);
@@ -40,27 +42,28 @@ public class CompareNc implements JavaDelegate {
 	}
 
 	public boolean unserBewerberImNcVergleich(int anzahlStuediengangsplaetze, double haertefallquote,
-			double bewerberquote, int pid) {
+			double bewerberquote, int pid, Studiengang studienfach) {
 
 		Bewerber ourCandidate = DBAccess.getInstance().getOurCandidate(pid);
 
 		boolean continueProcess = true;
 
-		LinkedList<Double> ncWerte = DBAccess.getInstance().getAlleNcs();
+		LinkedList<Double> ncWerte = DBAccess.getInstance().getAlleNcs(studienfach);
 		double letzterNcZulassung = getLetzterNcFuerZulassung(anzahlStuediengangsplaetze, ncWerte);
 
-		if (ourCandidate.getNc() > letzterNcZulassung) {
-			if (ourCandidate.getHaertefall() == 0) {
+		
+		if (ourCandidate.getNc() >= letzterNcZulassung) {
+			if (ourCandidate.getHaertefall() ==0) {
 				continueProcess = false;
 
 			} else {
 
 				LinkedList<Bewerber> schlechteBewerberListe = DBAccess.getInstance()
-						.getCandidatesWithInsufficientGrades(letzterNcZulassung);
+						.getCandidatesWithInsufficientGrades(letzterNcZulassung, studienfach);
 				LinkedList<Double> ncsHaertefaelle = getNcsVonHaertefaellen(schlechteBewerberListe);
 				Double schlechtesterHaertefallNc = getLetzterNcHaertefaelle(haertefallquote, anzahlStuediengangsplaetze,
 						ncsHaertefaelle);
-				if (ourCandidate.getNc() - bewerberquote > schlechtesterHaertefallNc) {
+				if (ourCandidate.getNc() - bewerberquote >= schlechtesterHaertefallNc) {
 					continueProcess = false;
 				}
 

@@ -43,15 +43,15 @@ public class DBAccess {
 		return rsReal;
 	}
 
-	public void insertIntoStudent(String matrikelNummer, String versichertennummer, int pid) {
+	public void insertIntoStudent(String matrikelNummer, String versichertennummer, Studiengang studiengang) {
 		setCon();
 
-		String sql = "INSERT INTO Student (SID, Matrikelnummer, Versichertennummer) values (?,?,?)";
+		String sql = "INSERT INTO Student (Matrikelnummer, Versichertennummer, Studiengang) values (?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			ps.setInt(1, pid);
-			ps.setString(2, matrikelNummer);
-			ps.setString(3, versichertennummer);
+			ps.setString(1, matrikelNummer);
+			ps.setString(2, versichertennummer);
+			ps.setString(3, studiengang.toString());
 
 			try {
 				ps.executeUpdate();
@@ -197,6 +197,34 @@ public class DBAccess {
 			}
 
 		return pid;
+	}
+	
+	
+	
+	public int getSid() {
+
+		setCon();
+		
+		ResultSet rs = null;
+		PreparedStatement pSmt = null;
+		int sid =0;
+		String sql = "SELECT MAX(sid) from Student";
+		try{
+			pSmt = conn.prepareStatement(sql);
+			rs = pSmt.executeQuery();
+			
+			if(!rs.next()){
+				System.out.println("no Student in DB");
+			}else {
+				sid = rs.getInt(1);
+
+			}
+			}catch(SQLException e){
+
+				e.printStackTrace();
+			}
+
+		return sid;
 	}
 
 	private void setCon() {
@@ -360,12 +388,45 @@ public class DBAccess {
 
 	// Methoden für Nc-Werte vergleichen
 
-	public LinkedList<Double> getAlleNcs() {
+//	public LinkedList<Double> getAlleNcs() {
+//		setCon();
+//
+//		ResultSet rsNcs = null;
+//		PreparedStatement pSmt = null;
+//		String sql = "SELECT nc FROM Bewerber";
+//		LinkedList<Double> ncWerte = new LinkedList<Double>();
+//		try {
+//			pSmt = conn.prepareStatement(sql);
+//			rsNcs = pSmt.executeQuery();
+//
+//			if (!rsNcs.next()) {
+//				System.out.println("Keine Bewerber in Datenbank");
+//			} else {
+//
+//				while (rsNcs.next()) {
+//					double nc = rsNcs.getDouble("nc");
+//					ncWerte.add(nc);
+//
+//				}
+//			}
+//
+//		} catch (SQLException e) {
+//			System.out.println("NcWerte vergleichen konnte nicht ausgeführt werden");
+//			e.printStackTrace();
+//		}
+//
+//		closeCon();
+//		return ncWerte;
+//	}
+	
+	
+	
+	public LinkedList<Double> getAlleNcs(Studiengang studiengang) {
 		setCon();
 
 		ResultSet rsNcs = null;
 		PreparedStatement pSmt = null;
-		String sql = "SELECT nc FROM Bewerber";
+		String sql = "SELECT nc FROM Bewerber INNER JOIN Person on pid = bid WHERE studiengang = \""+ studiengang.toString() + "\"";
 		LinkedList<Double> ncWerte = new LinkedList<Double>();
 		try {
 			pSmt = conn.prepareStatement(sql);
@@ -391,14 +452,14 @@ public class DBAccess {
 		return ncWerte;
 	}
 
-	public LinkedList<Bewerber> getCandidatesWithInsufficientGrades(Double lastNcForAdmission) {
+	public LinkedList<Bewerber> getCandidatesWithInsufficientGrades(Double lastNcForAdmission, Studiengang studiengang) {
 
 		setCon();
 		LinkedList<Bewerber> listOfCandidatesWithInsufficientGrades = new LinkedList<Bewerber>();
 		Bewerber candidate = null;
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
-		String sql = "SELECT * FROM Person INNER JOIN Bewerber WHERE nc > " + lastNcForAdmission;
+		String sql = "SELECT * FROM Person INNER JOIN Bewerber on pid = bid WHERE nc > " + lastNcForAdmission +"AND studiengang = \""+ studiengang.toString() + "\"";
 
 		try {
 			setCon();
@@ -419,13 +480,13 @@ public class DBAccess {
 					Date geburtsdatum = rs.getDate("geburtsdatum");
 					String telefonnummer = rs.getString("telefonnummer");
 					String eMail = rs.getString("emailAdresse");
-					Studiengang studiengang = Studiengang.valueOf(rs.getString("studiengang"));
+					Studiengang studienfach = Studiengang.valueOf(rs.getString("studiengang"));
 					double haertefall = rs.getDouble("haertefall");
 					Double nc = rs.getDouble("nc");
 					SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
 							.valueOf(rs.getString("semesterbeitragBezahlt"));
 
-					candidate = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studiengang, haertefall,
+					candidate = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studienfach, haertefall,
 							nc, semesterbeitragBezahlt);
 
 					listOfCandidatesWithInsufficientGrades.add(candidate);
