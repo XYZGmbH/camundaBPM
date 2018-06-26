@@ -43,15 +43,16 @@ public class DBAccess {
 		return rsReal;
 	}
 
-	public void insertIntoStudent(String matrikelNummer, String versichertennummer, Studiengang studiengang) {
+	public void insertIntoStudent(int pid, String matrikelNummer, String versichertennummer, Studiengang studiengang) {
 		setCon();
 
-		String sql = "INSERT INTO Student (Matrikelnummer, Versichertennummer, Studiengang) values (?,?,?)";
+		String sql = "INSERT INTO Student (Sid, Matrikelnummer, Versichertennummer, Studiengang) values (?,?,?,?)";
 
 		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			ps.setString(1, matrikelNummer);
-			ps.setString(2, versichertennummer);
-			ps.setString(3, studiengang.toString());
+			ps.setInt(1, pid);
+			ps.setString(2, matrikelNummer);
+			ps.setString(3, versichertennummer);
+			ps.setString(4, studiengang.toString());
 
 			try {
 				ps.executeUpdate();

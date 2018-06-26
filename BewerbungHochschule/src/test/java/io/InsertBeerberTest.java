@@ -16,28 +16,29 @@ import utils.Studiengang;
 
 public class InsertBeerberTest {
 
-//	public static void main(String[] args) throws ParseException {
-//		SimpleDateFormat sdfToDate = new SimpleDateFormat(
-//				"dd.MM.yyyy");
-//		
-//		
-//	    Date geburtsdatum = sdfToDate.parse("19.08.1993");
-//	    
-//	    CompareNc compareNc = new CompareNc();
-//	    
-//	    CheckPayment checkPayment = new CheckPayment();
-//	    
-//	    InsertStudentIntoDB insertStudentIntoDB = new InsertStudentIntoDB();
-//	    
-//		
-//
-//	    
-//	    Studiengang studiengang = Studiengang.Angewandte_Informatik;
-//	    DBAccess.getInstance().insertIntoStudent(insertStudentIntoDB.generateMatrikelnummer(), "1234", studiengang);
-//	    int sid = DBAccess.getInstance().getSid();
-//		DBAccess.getInstance().insertIntoBankdaten("BYLADEM1002", "DE12345678901234567891", sid);
-//		
-//		
+	public static void main(String[] args) throws ParseException {
+		SimpleDateFormat sdfToDate = new SimpleDateFormat(
+				"dd.MM.yyyy");
+		
+		
+	    Date geburtsdatum = sdfToDate.parse("19.08.1993");
+	    
+	    CompareNc compareNc = new CompareNc();
+	    
+	    CheckPayment checkPayment = new CheckPayment();
+	    
+	    InsertStudentIntoDB insertStudentIntoDB = new InsertStudentIntoDB();
+	    
+		
+
+	    
+	    Studiengang studiengang = Studiengang.Angewandte_Informatik;
+	   int pid =  DBAccess.getInstance().getPid();
+	    DBAccess.getInstance().insertIntoStudent(pid,insertStudentIntoDB.generateMatrikelnummer(), "1234", studiengang);
+
+		DBAccess.getInstance().insertIntoBankdaten("BYLADEM1002", "DE12345678901234567891", pid);
+		
+		
 //		
 //		LinkedList <Double> ncs = new LinkedList <Double> ();
 //		ncs= DBAccess.getInstance().getAlleNcs(Studiengang.Wirtschaftsinformatik);
@@ -53,7 +54,7 @@ public class InsertBeerberTest {
 //	    
 //	    boolean ncPassen = compareNc.unserBewerberImNcVergleich(20, 0.3, 0, 1,Studiengang.Wirtschaftsinformatik );
 //	    System.out.println(ncPassen);
-//	    
-//	}
+	    
+	}
 
 }
