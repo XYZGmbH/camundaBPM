@@ -226,7 +226,7 @@ public class DBAccess {
 
 				e.printStackTrace();
 			}
-
+      closeCon();
 		return sid;
 	}
 
