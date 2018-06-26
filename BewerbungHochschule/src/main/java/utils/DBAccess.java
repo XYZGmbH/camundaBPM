@@ -366,7 +366,7 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM Bewerber WHERE bid =" + this.getPid();
+			String sql = "DELETE FROM Bewerber WHERE bid =" + pid;
 			pSmt = conn.prepareStatement(sql);
 			pSmt.execute();
 		} catch (SQLException e) {
