@@ -72,7 +72,7 @@
       <bpmn:incoming>SequenceFlow_0aahrh4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_03tynks</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0wossut" name="Zusage versenden">

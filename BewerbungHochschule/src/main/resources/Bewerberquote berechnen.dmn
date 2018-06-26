@@ -94,6 +94,23 @@
           <text>0.05</text>
         </outputEntry>
       </rule>
+      <rule id="DecisionRule_1vq719x">
+        <inputEntry id="UnaryTests_013r0rf">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0k504y7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1n2a6t9">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xxgrv4">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mzkck3">
+          <text>0.00</text>
+        </outputEntry>
+      </rule>
     </decisionTable>
   </decision>
 </definitions>

@@ -29,7 +29,7 @@ public class CreateStudentCard implements JavaDelegate{
 				nachname = (String) exec.getVariable("nachname"),
 				matrikelnummer = (String) exec.getVariable("matrikelnummer"),
 				geburtsdatum  = (String) exec.getVariable("geburtsdatum"),
-				studiengang = (String) exec.getVariable("studiengang");
+				studiengang = (String) exec.getVariable("Studienfach");
 		this.createCard(vorname, nachname, geburtsdatum, matrikelnummer, studiengang);
 		exec.setVariable("type", "bestaetigung");
 	}
