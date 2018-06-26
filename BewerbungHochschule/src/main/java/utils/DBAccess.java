@@ -85,6 +85,7 @@ public class DBAccess {
 			System.out.println("Unable to execute setPaid");
 			e.printStackTrace();
 		}
+		closeCon();
 	}
 
 	public void insertIntoBewerber(double haertefall, double nc, int pid) {
@@ -196,6 +197,7 @@ public class DBAccess {
 
 				e.printStackTrace();
 			}
+		closeCon();
 
 		return pid;
 	}
@@ -302,6 +304,7 @@ public class DBAccess {
 			System.out.println("Method getOurCandidate had some issues");
 			e.printStackTrace();
 		}
+		closeCon();
 		
 		return bewerber;
 
@@ -334,6 +337,7 @@ public class DBAccess {
 		System.out.println("einzahlungPruefen konnte nicht ausgefuehrt werden");
 		e.printStackTrace();
 	    }
+		closeCon();
 
 	return semesterbeitragBezahlt;
 	}
