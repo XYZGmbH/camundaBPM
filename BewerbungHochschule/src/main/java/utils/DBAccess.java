@@ -21,8 +21,6 @@ public class DBAccess {
 	private static DBAccess exemplar = null;
 	private Connection conn = null;
 
-
-
 	public ResultSet getPerson(int pid) {
 		setCon();
 		String sql = "SELECT * from Person where pid = ?";
@@ -69,19 +67,17 @@ public class DBAccess {
 
 		closeCon();
 	}
-	
-	
-	
-	public void setPaid(int pid){
+
+	public void setPaid(int pid) {
 		setCon();
 		PreparedStatement pSmt = null;
-		
-		try{
+
+		try {
 			pSmt = conn.prepareStatement("UPDATE Bewerber SET SemesterbeitragBezahlt = ? WHERE bid= ?");
 			pSmt.setString(1, SemesterbeitragBezahlt.j.toString());
 			pSmt.setInt(2, pid);
 			pSmt.executeUpdate();
-		}catch (SQLException e ){
+		} catch (SQLException e) {
 			System.out.println("Unable to execute setPaid");
 			e.printStackTrace();
 		}
@@ -115,8 +111,8 @@ public class DBAccess {
 		closeCon();
 	}
 
-	public void insertIntoPerson(Anrede anrede, String name, String vorname, Date geburtsdatum, String telefonnummer, String email,
-			Studiengang studiengang) {
+	public void insertIntoPerson(Anrede anrede, String name, String vorname, Date geburtsdatum, String telefonnummer,
+			String email, Studiengang studiengang) {
 		setCon();
 		String sql = "INSERT INTO Person (Anrede, Name, Vorname, Geburtsdatum, Telefonnummer, EmailAdresse, Studiengang) "
 				+ "values (?,?,?,?,?,?,?)";
@@ -146,87 +142,83 @@ public class DBAccess {
 		closeCon();
 	}
 
-	
-	
 	public void insertIntoBankdaten(String Bic, String iban, int pid) {
-	setCon();
+		setCon();
 
-	String sql = "INSERT INTO Bankdaten (BankId, Bic, Iban) values (?,?,?)";
+		String sql = "INSERT INTO Bankdaten (BankId, Bic, Iban) values (?,?,?)";
 
-	try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-		ps.setInt(1, pid);
-		ps.setString(2, Bic);
-		ps.setString(3, iban);
-		
+		try (PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+			ps.setInt(1, pid);
+			ps.setString(2, Bic);
+			ps.setString(3, iban);
 
-		try {
-			ps.executeUpdate();
-			System.out.println("Bankdaten inserted");
-		} catch (SQLException e1) {
-			System.out.println("Unable to execute update");
-			e1.printStackTrace();
+			try {
+				ps.executeUpdate();
+				System.out.println("Bankdaten inserted");
+			} catch (SQLException e1) {
+				System.out.println("Unable to execute update");
+				e1.printStackTrace();
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Unable to prepare Statement");
+			e.printStackTrace();
 		}
 
-	} catch (SQLException e) {
-		System.out.println("Unable to prepare Statement");
-		e.printStackTrace();
+		closeCon();
 	}
-
-	closeCon();
-}
 
 	public int getPid() {
 
 		setCon();
-		
+
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
-		int pid =0;
+		int pid = 0;
 		String sql = "SELECT MAX(pid) from Person";
-		try{
+		try {
 			pSmt = conn.prepareStatement(sql);
 			rs = pSmt.executeQuery();
-			
-			if(!rs.next()){
+
+			if (!rs.next()) {
 				System.out.println("no person in DB");
-			}else {
+			} else {
 				pid = rs.getInt(1);
 
 			}
-			}catch(SQLException e){
+		} catch (SQLException e) {
 
-				e.printStackTrace();
-			}
+			e.printStackTrace();
+		}
 		closeCon();
 
 		return pid;
 	}
-	
-	
-	
+
 	public int getSid() {
 
 		setCon();
-		
+
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
-		int sid =0;
+		int sid = 0;
 		String sql = "SELECT MAX(sid) from Student";
-		try{
+		try {
 			pSmt = conn.prepareStatement(sql);
 			rs = pSmt.executeQuery();
-			
-			if(!rs.next()){
+
+			if (!rs.next()) {
 				System.out.println("no Student in DB");
-			}else {
+			} else {
 				sid = rs.getInt(1);
 
 			}
-			}catch(SQLException e){
+		} catch (SQLException e) {
 
-				e.printStackTrace();
-			}
+			e.printStackTrace();
+		}
 
+		closeCon();
 		return sid;
 	}
 
@@ -268,7 +260,6 @@ public class DBAccess {
 		return exemplar;
 	}
 
-	
 	// Unseren Bewerber aus DB filtern
 
 	public Bewerber getOurCandidate(int pid) {
@@ -276,14 +267,14 @@ public class DBAccess {
 		Bewerber bewerber = null;
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
-		String sql = "SELECT * FROM Person INNER JOIN Bewerber on pid = bid where pid = " +pid;
-		
-		try{
+		String sql = "SELECT * FROM Person INNER JOIN Bewerber on pid = bid where pid = " + pid;
+
+		try {
 			pSmt = conn.prepareStatement(sql);
 			rs = pSmt.executeQuery();
-			if (!rs.next()){
+			if (!rs.next()) {
 				System.out.println("Our candidate wasn't found in the DB");
-			}else{
+			} else {
 				Anrede anrede = Anrede.valueOf(rs.getString("anrede"));
 				String name = rs.getString("name");
 				String vorname = rs.getString("vorname");
@@ -296,25 +287,25 @@ public class DBAccess {
 				SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
 						.valueOf(rs.getString("semesterbeitragBezahlt"));
 
-				bewerber = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studiengang, haertefall,
-						nc, semesterbeitragBezahlt);
+				bewerber = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studiengang,
+						haertefall, nc, semesterbeitragBezahlt);
 			}
-			
-		}catch(SQLException e){
+
+		} catch (SQLException e) {
 			System.out.println("Method getOurCandidate had some issues");
 			e.printStackTrace();
 		}
 		closeCon();
-		
+
 		return bewerber;
 
 	}
 
 	// Semesterbeitragseinzahlung prüfen
 
-	public SemesterbeitragBezahlt einzahlungPruefen(Bewerber bewerber){
+	public SemesterbeitragBezahlt einzahlungPruefen(Bewerber bewerber) {
 		SemesterbeitragBezahlt semesterbeitragBezahlt = null;
-		
+
 		setCon();
 
 		ResultSet rs = null;
@@ -330,20 +321,16 @@ public class DBAccess {
 			} else {
 				semesterbeitragBezahlt = SemesterbeitragBezahlt.valueOf(rs.getString("semesterbeitragBezahlt"));
 
-				}
-			
+			}
 
-		}catch(SQLException e){
-		System.out.println("einzahlungPruefen konnte nicht ausgefuehrt werden");
-		e.printStackTrace();
-	    }
+		} catch (SQLException e) {
+			System.out.println("einzahlungPruefen konnte nicht ausgefuehrt werden");
+			e.printStackTrace();
+		}
 		closeCon();
 
-	return semesterbeitragBezahlt;
+		return semesterbeitragBezahlt;
 	}
-	
-	
-	
 
 	// Delete-Methoden
 
@@ -366,7 +353,7 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
-			String sql = "DELETE FROM Bewerber WHERE bid =" + this.getPid();
+			String sql = "DELETE FROM Bewerber WHERE bid = " + pid;
 			pSmt = conn.prepareStatement(sql);
 			pSmt.execute();
 		} catch (SQLException e) {
@@ -391,47 +378,13 @@ public class DBAccess {
 
 	}
 
-	// Methoden für Nc-Werte vergleichen
-
-//	public LinkedList<Double> getAlleNcs() {
-//		setCon();
-//
-//		ResultSet rsNcs = null;
-//		PreparedStatement pSmt = null;
-//		String sql = "SELECT nc FROM Bewerber";
-//		LinkedList<Double> ncWerte = new LinkedList<Double>();
-//		try {
-//			pSmt = conn.prepareStatement(sql);
-//			rsNcs = pSmt.executeQuery();
-//
-//			if (!rsNcs.next()) {
-//				System.out.println("Keine Bewerber in Datenbank");
-//			} else {
-//
-//				while (rsNcs.next()) {
-//					double nc = rsNcs.getDouble("nc");
-//					ncWerte.add(nc);
-//
-//				}
-//			}
-//
-//		} catch (SQLException e) {
-//			System.out.println("NcWerte vergleichen konnte nicht ausgeführt werden");
-//			e.printStackTrace();
-//		}
-//
-//		closeCon();
-//		return ncWerte;
-//	}
-	
-	
-	
 	public LinkedList<Double> getAlleNcs(Studiengang studiengang) {
 		setCon();
 
 		ResultSet rsNcs = null;
 		PreparedStatement pSmt = null;
-		String sql = "SELECT nc FROM Bewerber INNER JOIN Person on pid = bid WHERE studiengang = \""+ studiengang.toString() + "\"";
+		String sql = "SELECT nc FROM Bewerber INNER JOIN Person on pid = bid WHERE studiengang = \""
+				+ studiengang.toString() + "\"";
 		LinkedList<Double> ncWerte = new LinkedList<Double>();
 		try {
 			pSmt = conn.prepareStatement(sql);
@@ -457,17 +410,19 @@ public class DBAccess {
 		return ncWerte;
 	}
 
-	public LinkedList<Bewerber> getCandidatesWithInsufficientGrades(Double lastNcForAdmission, Studiengang studiengang) {
+	public LinkedList<Bewerber> getCandidatesWithInsufficientGrades(Double lastNcForAdmission,
+			Studiengang studiengang) {
 
 		setCon();
 		LinkedList<Bewerber> listOfCandidatesWithInsufficientGrades = new LinkedList<Bewerber>();
 		Bewerber candidate = null;
 		ResultSet rs = null;
 		PreparedStatement pSmt = null;
-		String sql = "SELECT * FROM Person INNER JOIN Bewerber on pid = bid WHERE nc > " + lastNcForAdmission +"AND studiengang = \""+ studiengang.toString() + "\"";
+		String sql = "SELECT * FROM Person INNER JOIN Bewerber on pid = bid WHERE nc > " + lastNcForAdmission
+				+ "AND studiengang = \"" + studiengang.toString() + "\"";
 
 		try {
-			setCon();
+			// setCon();
 			pSmt = conn.prepareStatement(sql);
 			rs = pSmt.executeQuery();
 
@@ -491,8 +446,8 @@ public class DBAccess {
 					SemesterbeitragBezahlt semesterbeitragBezahlt = SemesterbeitragBezahlt
 							.valueOf(rs.getString("semesterbeitragBezahlt"));
 
-					candidate = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail, studienfach, haertefall,
-							nc, semesterbeitragBezahlt);
+					candidate = new Bewerber(anrede, name, vorname, geburtsdatum, pid, telefonnummer, eMail,
+							studienfach, haertefall, nc, semesterbeitragBezahlt);
 
 					listOfCandidatesWithInsufficientGrades.add(candidate);
 

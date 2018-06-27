@@ -20,6 +20,7 @@ public class InsertStudentIntoDB implements JavaDelegate {
 		
 		
 		int pid = (int) execution.getVariable("pid");
+		System.out.println("pid = " + pid);
 		Studiengang studienfach = Studiengang.valueOf((String) execution.getVariable("Studienfach"));
 		DBAccess.getInstance().insertIntoStudent(pid, matrikelnummer, versichertennummer, studienfach);
 		

@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import domain.Bewerber;
 import utils.DBAccess;
 import utils.SemesterbeitragBezahlt;
+import utils.Studiengang;
 
 public class CheckPayment implements JavaDelegate{
 
@@ -13,9 +14,13 @@ public class CheckPayment implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 
 		int pid = (int) execution.getVariable("pid");
-		DBAccess.getInstance().setPaid(pid);
+		SemesterbeitragBezahlt payment = SemesterbeitragBezahlt.valueOf((String) execution.getVariable("payment"));
+		if(payment == SemesterbeitragBezahlt.j) {
+			
+			DBAccess.getInstance().setPaid(pid);
+		}
+		
 		execution.setVariable("paid", checkIfPayed(pid));
-		execution.setVariable("unterlagenKorrekt", true);
 		
 	}
 

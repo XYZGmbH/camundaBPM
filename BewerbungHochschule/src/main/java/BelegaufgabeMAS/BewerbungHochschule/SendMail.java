@@ -41,7 +41,7 @@ public class SendMail implements JavaDelegate{
 		if(type.equalsIgnoreCase("zusage") || type.equalsIgnoreCase("absage")) {
 			mail = this.createEmail(emailParts.get("body"), emailParts.get("subject"), email);
 		}else {
-			File f = new File("./target/studentCard" + matrikelnummer + ".pdf");
+			File f = new File("C:/Users/Felix/studentCard" + matrikelnummer + ".pdf");
 			EmailAttachment attach = new EmailAttachment();
 			attach.setPath(f.getPath());
 			attach.setDisposition(EmailAttachment.ATTACHMENT);
@@ -71,7 +71,7 @@ public class SendMail implements JavaDelegate{
 //		email.addTo(toEmail);
 //		email.setFrom("XXXXXX@gmx.de");
 		email.setHostName("mail.htw-berlin.de");
-	//	email.setAuthentication();
+		//email.setAuthentication();
 		email.addTo(toEmail);
 		email.setFrom("s0561126@htw-berlin.de");
 		email.setSubject(subject);

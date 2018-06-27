@@ -8,6 +8,7 @@
     <bpmn:messageFlow id="MessageFlow_0o8awfv" sourceRef="IntermediateThrowEvent_0rz3cf0" targetRef="Participant_0xou18w" />
     <bpmn:messageFlow id="MessageFlow_1mfih6c" sourceRef="IntermediateThrowEvent_0q0orfq" targetRef="Participant_0xou18w" />
     <bpmn:messageFlow id="MessageFlow_16dmacf" sourceRef="IntermediateThrowEvent_0jez2vl" targetRef="Participant_0xou18w" />
+    <bpmn:messageFlow id="MessageFlow_1nsafi7" sourceRef="Participant_0xou18w" targetRef="IntermediateCatchEventUNterlagen" />
   </bpmn:collaboration>
   <bpmn:process id="mainProcess" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1ugf7mj" name="Bewerbungs-formular empfangen" camunda:formKey="embedded:app:forms/BewerbungsFormular.html">
@@ -206,12 +207,12 @@
     <bpmn:sequenceFlow id="SequenceFlow_0o2m7yd" sourceRef="ExclusiveGateway_1noi66k" targetRef="Task_15z9v4m" />
     <bpmn:sequenceFlow id="SequenceFlow_1pehcpv" sourceRef="Task_15z9v4m" targetRef="ExclusiveGateway_1gxq5ug" />
     <bpmn:sequenceFlow id="SequenceFlow_0c0006s" name="Unterlagen korrekt" sourceRef="ExclusiveGateway_0v7qyby" targetRef="Task_01o1qua">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${unterlagenKorrekt}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${versicherungkorrekt &amp;&amp; versicherungkorrekt &amp;&amp; paid}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_065lmsz" sourceRef="Task_01o1qua" targetRef="ExclusiveGateway_1noi66k" />
     <bpmn:sequenceFlow id="SequenceFlow_08w3ku8" sourceRef="ExclusiveGateway_0kpws3b" targetRef="ExclusiveGateway_0v7qyby" />
     <bpmn:sequenceFlow id="SequenceFlow_1snms3f" name="Unterlagen nicht korrekt" sourceRef="ExclusiveGateway_0v7qyby" targetRef="CallActivity_1sxq7q9">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!unterlagenKorrekt}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!(versicherungkorrekt &amp;&amp; versicherungkorrekt &amp;&amp; paid)}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0nqai40" sourceRef="ExclusiveGateway_0zt3u41" targetRef="Task_0og9wou" />
     <bpmn:sequenceFlow id="SequenceFlow_07t3as8" sourceRef="Task_0og9wou" targetRef="ExclusiveGateway_0kpws3b" />
@@ -225,11 +226,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_15vs7dm" sourceRef="IntermediateThrowEvent_0jez2vl" targetRef="EndEvent_0adve70" />
     <bpmn:sequenceFlow id="SequenceFlow_1v3bqpg" sourceRef="ExclusiveGateway_1gxq5ug" targetRef="Task_1qs8sm3" />
     <bpmn:sequenceFlow id="SequenceFlow_0qag8ml" sourceRef="Task_1qs8sm3" targetRef="EndEvent_0nfr9hr" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1bwy0ea">
-      <bpmn:incoming>SequenceFlow_19e95ay</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0aahrh4</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_1u7qtmp</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1u7qtmp" sourceRef="ExclusiveGateway_1bwy0ea" targetRef="IntermediateCatchEventUNterlagen" />
     <bpmn:sequenceFlow id="SequenceFlow_1ucqiae" sourceRef="IntermediateCatchEventUNterlagen" targetRef="ExclusiveGateway_0zt3u41" />
     <bpmn:intermediateCatchEvent id="IntermediateCatchEventUNterlagen" name="Unterlagen angekommen">
@@ -237,6 +233,11 @@
       <bpmn:outgoing>SequenceFlow_1ucqiae</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_0cl902e" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:eventBasedGateway id="ExclusiveGateway_1bwy0ea">
+      <bpmn:incoming>SequenceFlow_19e95ay</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0aahrh4</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1u7qtmp</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
     <bpmn:textAnnotation id="TextAnnotation_0cvpgtn">
       <bpmn:text>Inhalt: Zusage, Unterlagen anfordern, Semesterbeitrag anfordern</bpmn:text>
     </bpmn:textAnnotation>
@@ -689,22 +690,26 @@
         <di:waypoint x="2436" y="397" />
         <di:waypoint x="2436" y="607" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1kknw0g_di" bpmnElement="ExclusiveGateway_1bwy0ea" isMarkerVisible="true">
-        <dc:Bounds x="1424" y="214" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1u7qtmp_di" bpmnElement="SequenceFlow_1u7qtmp">
         <di:waypoint x="1474" y="239" />
-        <di:waypoint x="1612" y="239" />
+        <di:waypoint x="1723" y="239" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ucqiae_di" bpmnElement="SequenceFlow_1ucqiae">
-        <di:waypoint x="1648" y="239" />
+        <di:waypoint x="1759" y="239" />
         <di:waypoint x="1796" y="239" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateCatchEvent_1nxkmrf_di" bpmnElement="IntermediateCatchEventUNterlagen">
-        <dc:Bounds x="1612" y="221" width="36" height="36" />
+        <dc:Bounds x="1723" y="221" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1597" y="264" width="67" height="27" />
+          <dc:Bounds x="1707" y="183.5" width="67" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1nsafi7_di" bpmnElement="MessageFlow_1nsafi7">
+        <di:waypoint x="1744" y="607" />
+        <di:waypoint x="1744" y="256" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EventBasedGateway_09typzi_di" bpmnElement="ExclusiveGateway_1bwy0ea">
+        <dc:Bounds x="1424" y="214" width="50" height="50" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
