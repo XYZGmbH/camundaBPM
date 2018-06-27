@@ -215,10 +215,16 @@ public class DBAccess {
 			}
 		} catch (SQLException e) {
 
+<<<<<<< HEAD
 			e.printStackTrace();
 		}
 
 		closeCon();
+=======
+				e.printStackTrace();
+			}
+      closeCon();
+>>>>>>> branch 'master' of https://github.com/felixAnhalt/camundaBPM.git
 		return sid;
 	}
 
@@ -353,7 +359,11 @@ public class DBAccess {
 		setCon();
 		try {
 			PreparedStatement pSmt = null;
+<<<<<<< HEAD
 			String sql = "DELETE FROM Bewerber WHERE bid = " + pid;
+=======
+			String sql = "DELETE FROM Bewerber WHERE bid =" + pid;
+>>>>>>> branch 'master' of https://github.com/felixAnhalt/camundaBPM.git
 			pSmt = conn.prepareStatement(sql);
 			pSmt.execute();
 		} catch (SQLException e) {
