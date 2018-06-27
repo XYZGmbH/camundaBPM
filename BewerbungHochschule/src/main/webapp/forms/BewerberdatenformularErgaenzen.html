@@ -33,14 +33,9 @@ input:invalid {
 			required="false" type="email" readonly="true"/>
 	</div>
 	<div>
-		Studienfach <select cam-variable-type="String"
-			cam-variable-name="Studienfach" name="studienfach" required="false" disabled="true">
-			<option value="Angewandte_Informatik">Angewandte Informatik</option>
-			<option value="Elektrotechnik">Elektrotechnik</option>
-			<option value="Wirtschaftsinformatik">Wirtschaftsinformatik</option>
-			<option value="Wirtschaftsmathematik">Wirtschaftsmathematik</option>
-		</select>
-
+		<label for="Studienfach">Studienfach</label> <input class="form-control"
+			cam-variable-type="String" cam-variable-name="Studienfach" name="Studienfach"
+			required="false" readonly="true"/>
 	</div>
 	
 	<div>
@@ -48,8 +43,6 @@ input:invalid {
 			cam-variable-type="Double" cam-variable-name="nc"
 			name="numerusClausus" required="false" readonly="true" />
 			</div>
-
-	
 	<div>
 		<label for="rufnummer">Rufnummer</label> <input class="form-control"
 			cam-variable-type="String" cam-variable-name="rufnummer"
