@@ -1,5 +1,9 @@
 package utils;
 
+/**
+ * @author Felix
+ *Contains Values which are needed for the DataBase-Connection.
+ */
 public interface DBCred {
 
 	final String HOSTNAME = "sql7.freemysqlhosting.net";
