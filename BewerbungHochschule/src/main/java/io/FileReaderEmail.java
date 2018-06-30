@@ -14,7 +14,6 @@ public class FileReaderEmail {
 
 	public LinkedList<String> getEmailRows(String applicationStatus) {
 		
-		//File f = new File("templates/emailTempl" + applicationStatus + ".txt");
 		InputStream inS = FileReaderEmail.class.getResourceAsStream("/templates/emailTempl" + applicationStatus + ".txt");
 		BufferedReader in = null;
 		String zeile = null;
@@ -58,10 +57,6 @@ public class FileReaderEmail {
 	
 	String createBodyFromList(LinkedList<String> emailRows, String applicationStatus, String anrede, String vorname, String nachname) {		
 		String body = "";
-		
-		if(!emailRows.isEmpty()) {
-			
-		}
 		
 		for(String str:emailRows) {
 			body += str + "\n";
