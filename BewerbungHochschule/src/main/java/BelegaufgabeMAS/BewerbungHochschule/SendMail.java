@@ -108,7 +108,6 @@ public class SendMail implements JavaDelegate {
 	 *             an Exception
 	 */
 	public MultiPartEmail createEmail(String mailtext, String subject, String toEmail) throws EmailException {
-		// https://anleitungen.rz.htw-berlin.de/de/email/e-mail_programm/
 
 		MultiPartEmail email = new MultiPartEmail();
 		email.setCharset("utf-8");
