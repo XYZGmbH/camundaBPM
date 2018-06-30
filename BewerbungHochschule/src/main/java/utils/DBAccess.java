@@ -10,17 +10,31 @@ import java.util.LinkedList;
 
 import domain.Bewerber;
 
+/**
+ * @author judithhogerl
+ *
+ */
+/**
+ * @author judithhogerl
+ *
+ */
 public class DBAccess {
 
-	// Constructor
+	
+
 	private DBAccess() {
 
 	}
 
-	// Objects
+	
 	private static DBAccess exemplar = null;
 	private Connection conn = null;
 
+	/**
+	 * 
+	 * @param pid PersonId of the person to get data from database
+	 * @return rsRreal: Result Set with all data of the person from the database
+	 */
 	public ResultSet getPerson(int pid) {
 		setCon();
 		String sql = "SELECT * from Person where pid = ?";
@@ -41,6 +55,13 @@ public class DBAccess {
 		return rsReal;
 	}
 
+	/**
+	 * Method to insert a new student into the database
+	 * @param pid PersonId of the person that will get an entry in the student table
+	 * @param matrikelNummer matriculation number of the new student
+	 * @param versichertennummer Social security number of the new student
+	 * @param studiengang degree program of the new student
+	 */
 	public void insertIntoStudent(int pid, String matrikelNummer, String versichertennummer, Studiengang studiengang) {
 		setCon();
 
@@ -68,6 +89,10 @@ public class DBAccess {
 		closeCon();
 	}
 
+	/**
+	 * changes the status of paid in the student database from unpaid to paid 
+	 * @param pid Id of the student who's status is to be changed
+	 */
 	public void setPaid(int pid) {
 		setCon();
 		PreparedStatement pSmt = null;
@@ -84,6 +109,12 @@ public class DBAccess {
 		closeCon();
 	}
 
+	/**
+	 * method to insert a new candidate into the database
+	 * @param haertefall case of hardship of the candidate
+	 * @param nc numerus clausus of the candidate 
+	 * @param pid PersonId of the candidate
+	 */
 	public void insertIntoBewerber(double haertefall, double nc, int pid) {
 		setCon();
 
@@ -111,6 +142,16 @@ public class DBAccess {
 		closeCon();
 	}
 
+	/**
+	 * method to insert a new person into the database
+	 * @param anrede the person's address (Mr./Ms.)
+	 * @param name  the person's last name
+	 * @param vorname the person's first name
+	 * @param geburtsdatum the person's birthday
+	 * @param telefonnummer the person's phone number
+	 * @param email the person's email address
+	 * @param studiengang the person's degree program
+	 */
 	public void insertIntoPerson(Anrede anrede, String name, String vorname, Date geburtsdatum, String telefonnummer,
 			String email, Studiengang studiengang) {
 		setCon();
@@ -142,6 +183,13 @@ public class DBAccess {
 		closeCon();
 	}
 
+	
+	/**
+	 * method to insert bank details into database
+	 * @param Bic 
+	 * @param iban
+	 * @param pid PersonId of the person who's bank details are about to be inserted
+	 */
 	public void insertIntoBankdaten(String Bic, String iban, int pid) {
 		setCon();
 
@@ -168,6 +216,10 @@ public class DBAccess {
 		closeCon();
 	}
 
+	/**
+	 * method to get the PersonId of the last person that was inserted into the database
+	 * @return pid PersonId of the person that had just been inserted into database
+	 */
 	public int getPid() {
 
 		setCon();
@@ -195,6 +247,10 @@ public class DBAccess {
 		return pid;
 	}
 
+	/**
+	 * method to get the StudentId of the last person that was inserted into the database
+	 * @return sid StudentId of the last person that was inserted into the database
+	 */
 	public int getSid() {
 
 		setCon();
@@ -223,6 +279,9 @@ public class DBAccess {
 		return sid;
 	}
 
+	/**
+	 * method to set the connection to the database
+	 */
 	private void setCon() {
 
 		try {
@@ -244,6 +303,9 @@ public class DBAccess {
 		}
 	}
 
+	/**
+	 * method to close the connection with the database
+	 */
 	private void closeCon() {
 		try {
 			conn.close();
@@ -254,6 +316,10 @@ public class DBAccess {
 		}
 	}
 
+	/**
+	 * singleton method for DBAccess class
+	 * @return exemplar singleton
+	 */
 	public static DBAccess getInstance() {
 		if (exemplar == null) {
 			exemplar = new DBAccess();
