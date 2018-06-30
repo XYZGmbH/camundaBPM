@@ -20,19 +20,22 @@ import domain.Bewerber;
  */
 public class DBAccess {
 
-	
-
+	/**
+	 * Private Constructor for Singleton.
+	 */
 	private DBAccess() {
 
 	}
 
-	
 	private static DBAccess exemplar = null;
 	private Connection conn = null;
 
 	/**
+	 * getPerson: Returns a ResultSet with all Information dedicated to a specific
+	 * person.
 	 * 
-	 * @param pid PersonId of the person to get data from database
+	 * @param pid
+	 *            PersonId of the person to get data from database
 	 * @return rsRreal: Result Set with all data of the person from the database
 	 */
 	public ResultSet getPerson(int pid) {
@@ -46,21 +49,26 @@ public class DBAccess {
 				rsReal = rs;
 
 			} catch (SQLException e) {
-
+				e.printStackTrace();
 			}
 		} catch (SQLException e2) {
-
+			e2.printStackTrace();
 		}
 		closeCon();
 		return rsReal;
 	}
 
 	/**
-	 * Method to insert a new student into the database
-	 * @param pid PersonId of the person that will get an entry in the student table
-	 * @param matrikelNummer matriculation number of the new student
-	 * @param versichertennummer Social security number of the new student
-	 * @param studiengang degree program of the new student
+	 * insertIntoStudent: Method to insert a new student into the database
+	 * 
+	 * @param pid
+	 *            PersonId of the person that will get an entry in the student table
+	 * @param matrikelNummer
+	 *            matriculation number of the new student
+	 * @param versichertennummer
+	 *            Social security number of the new student
+	 * @param studiengang
+	 *            degree program of the new student
 	 */
 	public void insertIntoStudent(int pid, String matrikelNummer, String versichertennummer, Studiengang studiengang) {
 		setCon();
@@ -90,8 +98,11 @@ public class DBAccess {
 	}
 
 	/**
-	 * changes the status of paid in the student database from unpaid to paid 
-	 * @param pid Id of the student who's status is to be changed
+	 * setPaid: changes the status of paid in the student database from unpaid to
+	 * paid
+	 * 
+	 * @param pid
+	 *            Id of the student who's status is to be changed
 	 */
 	public void setPaid(int pid) {
 		setCon();
@@ -110,10 +121,14 @@ public class DBAccess {
 	}
 
 	/**
-	 * method to insert a new candidate into the database
-	 * @param haertefall case of hardship of the candidate
-	 * @param nc numerus clausus of the candidate 
-	 * @param pid PersonId of the candidate
+	 * insertIntoBewerber: method to insert a new candidate into the database
+	 * 
+	 * @param haertefall
+	 *            case of hardship of the candidate
+	 * @param nc
+	 *            numerus clausus of the candidate
+	 * @param pid
+	 *            PersonId of the candidate
 	 */
 	public void insertIntoBewerber(double haertefall, double nc, int pid) {
 		setCon();
@@ -143,14 +158,22 @@ public class DBAccess {
 	}
 
 	/**
-	 * method to insert a new person into the database
-	 * @param anrede the person's address (Mr./Ms.)
-	 * @param name  the person's last name
-	 * @param vorname the person's first name
-	 * @param geburtsdatum the person's birthday
-	 * @param telefonnummer the person's phone number
-	 * @param email the person's email address
-	 * @param studiengang the person's degree program
+	 * insertIntoPerson: method to insert a new person into the database
+	 * 
+	 * @param anrede
+	 *            the person's address (Mr./Ms.)
+	 * @param name
+	 *            the person's last name
+	 * @param vorname
+	 *            the person's first name
+	 * @param geburtsdatum
+	 *            the person's birthday
+	 * @param telefonnummer
+	 *            the person's phone number
+	 * @param email
+	 *            the person's email address
+	 * @param studiengang
+	 *            the person's degree program
 	 */
 	public void insertIntoPerson(Anrede anrede, String name, String vorname, Date geburtsdatum, String telefonnummer,
 			String email, Studiengang studiengang) {
@@ -183,12 +206,13 @@ public class DBAccess {
 		closeCon();
 	}
 
-	
 	/**
-	 * method to insert bank details into database
-	 * @param Bic 
+	 * insertIntoBankdaten: method to insert bank details into database
+	 * 
+	 * @param Bic
 	 * @param iban
-	 * @param pid PersonId of the person who's bank details are about to be inserted
+	 * @param pid
+	 *            PersonId of the person who's bank details are about to be inserted
 	 */
 	public void insertIntoBankdaten(String Bic, String iban, int pid) {
 		setCon();
@@ -217,7 +241,9 @@ public class DBAccess {
 	}
 
 	/**
-	 * method to get the PersonId of the last person that was inserted into the database
+	 * getPid: method to get the PersonId of the last person that was inserted into
+	 * the database
+	 * 
 	 * @return pid PersonId of the person that had just been inserted into database
 	 */
 	public int getPid() {
@@ -248,7 +274,10 @@ public class DBAccess {
 	}
 
 	/**
-	 * method to get the StudentId of the last person that was inserted into the database
+	 * getSid:
+	 * method to get the StudentId of the last person that was inserted into the
+	 * database
+	 * 
 	 * @return sid StudentId of the last person that was inserted into the database
 	 */
 	public int getSid() {
@@ -280,6 +309,7 @@ public class DBAccess {
 	}
 
 	/**
+	 * setCon:
 	 * method to set the connection to the database
 	 */
 	private void setCon() {
@@ -304,6 +334,7 @@ public class DBAccess {
 	}
 
 	/**
+	 * closeCon:
 	 * method to close the connection with the database
 	 */
 	private void closeCon() {
@@ -317,7 +348,9 @@ public class DBAccess {
 	}
 
 	/**
+	 * getInstance:
 	 * singleton method for DBAccess class
+	 * 
 	 * @return exemplar singleton
 	 */
 	public static DBAccess getInstance() {
@@ -329,6 +362,11 @@ public class DBAccess {
 
 	// Unseren Bewerber aus DB filtern
 
+	/**
+	 * getOurCandidate:
+	 * @param pid pid of desired Candidate
+	 * @return Bewerber-Object, with attributes like the real candidate
+	 */
 	public Bewerber getOurCandidate(int pid) {
 		setCon();
 		Bewerber bewerber = null;
@@ -370,6 +408,12 @@ public class DBAccess {
 
 	// Semesterbeitragseinzahlung prüfen
 
+	/**
+	 * einzahlungPruefen:
+	 * check if a candidate has payed his tuitition fees.
+	 * @param bewerber the candidate we want the information about.
+	 * @return Enum Value of SemesterbeitragBezahlt
+	 */
 	public SemesterbeitragBezahlt einzahlungPruefen(Bewerber bewerber) {
 		SemesterbeitragBezahlt semesterbeitragBezahlt = null;
 
@@ -401,6 +445,11 @@ public class DBAccess {
 
 	// Delete-Methoden
 
+	/**
+	 * deleteFromPerson:
+	 * deletes A specific Person from the database.
+	 * @param pId pid of which person should be deleted from the database
+	 */
 	public void deleteFromPerson(int pId) {
 		setCon();
 		try {
@@ -416,6 +465,11 @@ public class DBAccess {
 
 	}
 
+	/**
+	 * deleteFromBewerber:
+	 * deletes a specific candidate from the database.
+	 * @param pid bid of the candidate who should be deleted.
+	 */
 	public void deleteFromBewerber(int pid) {
 		setCon();
 		try {
@@ -430,6 +484,11 @@ public class DBAccess {
 		closeCon();
 	}
 
+	/**
+	 * deleteFromStudent:
+	 * deletes a specific student from the database.
+	 * @param pId sid of the student who should be deleted.
+	 */
 	public void deleteFromStudent(int pId) {
 		setCon();
 		try {
@@ -445,6 +504,12 @@ public class DBAccess {
 
 	}
 
+	/**
+	 * getAlleNcs:
+	 * Returns the NCs of all candidates for a major. 
+	 * @param studiengang enum of a major
+	 * @return LinkedList with all NCs from the candidates for a major.
+	 */
 	public LinkedList<Double> getAlleNcs(Studiengang studiengang) {
 		setCon();
 
@@ -477,6 +542,13 @@ public class DBAccess {
 		return ncWerte;
 	}
 
+	/**
+	 * getCandidatesWithInsufficientGrades:
+	 * returns a LinkedList with candidates who have a NC higher than the last wich got admission.
+	 * @param lastNcForAdmission
+	 * @param studiengang
+	 * @return LinkedList with candidates who are too bad for the major.
+	 */
 	public LinkedList<Bewerber> getCandidatesWithInsufficientGrades(Double lastNcForAdmission,
 			Studiengang studiengang) {
 

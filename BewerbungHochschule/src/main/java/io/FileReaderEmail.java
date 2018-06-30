@@ -12,6 +12,12 @@ import java.util.LinkedList;
 
 public class FileReaderEmail {
 
+	/**
+	 * getEmailRows:
+	 * extracts the email Text from the through applicationStatus chosen template.
+	 * @param applicationStatus can be absage, bestaetigung, zusage 
+	 * @return LinkedList with each emailrow as String element.
+	 */
 	public LinkedList<String> getEmailRows(String applicationStatus) {
 		
 		InputStream inS = FileReaderEmail.class.getResourceAsStream("/templates/emailTempl" + applicationStatus + ".txt");
@@ -43,6 +49,15 @@ public class FileReaderEmail {
 		return emailRows;
 	}
 	
+	/**
+	 * getEmailParts: 
+	 * Reads from the chosen emailtemplate, extracts the body and adds subject and body into a hashmap.
+	 * @param applicationStatus
+	 * @param anrede
+	 * @param vorname
+	 * @param nachname
+	 * @return hashmap with email and body
+	 */
 	public HashMap<String, String> getEmailParts(String applicationStatus, String anrede, String vorname, String nachname){
 		LinkedList<String> mail = this.getEmailRows(applicationStatus);
 		HashMap<String,String> emailParts = new HashMap<String,String>();
@@ -55,6 +70,16 @@ public class FileReaderEmail {
 		return emailParts;
 	}
 	
+	/**
+	 * createBodyFromList:
+	 * replaces the variable parts from the Mailtext with Variables from the userforms.
+	 * @param emailRows LinkedList with variable content from the Mail.
+	 * @param applicationStatus status, which can be 'zusage', 'absage', 'bestaetigung'
+	 * @param anrede form of adress
+	 * @param vorname name
+	 * @param nachname surname
+	 * @return Emailbody as String
+	 */
 	String createBodyFromList(LinkedList<String> emailRows, String applicationStatus, String anrede, String vorname, String nachname) {		
 		String body = "";
 		
