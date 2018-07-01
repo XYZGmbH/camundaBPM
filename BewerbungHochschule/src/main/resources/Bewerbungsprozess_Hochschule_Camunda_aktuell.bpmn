@@ -57,6 +57,9 @@
       <bpmn:extensionElements>
         <camunda:in variables="all" />
         <camunda:out variables="all" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="type">absage</camunda:inputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_00oh13b</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17o876y</bpmn:outgoing>
@@ -139,6 +142,9 @@
       <bpmn:extensionElements>
         <camunda:in variables="all" />
         <camunda:out variables="all" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="type">absage</camunda:inputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1snms3f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dmb7nz</bpmn:outgoing>
@@ -207,12 +213,12 @@
     <bpmn:sequenceFlow id="SequenceFlow_0o2m7yd" sourceRef="ExclusiveGateway_1noi66k" targetRef="Task_15z9v4m" />
     <bpmn:sequenceFlow id="SequenceFlow_1pehcpv" sourceRef="Task_15z9v4m" targetRef="ExclusiveGateway_1gxq5ug" />
     <bpmn:sequenceFlow id="SequenceFlow_0c0006s" name="Unterlagen korrekt" sourceRef="ExclusiveGateway_0v7qyby" targetRef="Task_01o1qua">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${versicherungkorrekt &amp;&amp; versicherungkorrekt &amp;&amp; paid}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${versicherungkorrekt &amp;&amp; unterlagenkorrekt &amp;&amp; paid}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_065lmsz" sourceRef="Task_01o1qua" targetRef="ExclusiveGateway_1noi66k" />
     <bpmn:sequenceFlow id="SequenceFlow_08w3ku8" sourceRef="ExclusiveGateway_0kpws3b" targetRef="ExclusiveGateway_0v7qyby" />
     <bpmn:sequenceFlow id="SequenceFlow_1snms3f" name="Unterlagen nicht korrekt" sourceRef="ExclusiveGateway_0v7qyby" targetRef="CallActivity_1sxq7q9">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!(versicherungkorrekt &amp;&amp; versicherungkorrekt &amp;&amp; paid)}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!(versicherungkorrekt &amp;&amp; unterlagenkorrekt &amp;&amp; paid)}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0nqai40" sourceRef="ExclusiveGateway_0zt3u41" targetRef="Task_0og9wou" />
     <bpmn:sequenceFlow id="SequenceFlow_07t3as8" sourceRef="Task_0og9wou" targetRef="ExclusiveGateway_0kpws3b" />
