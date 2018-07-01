@@ -14,6 +14,12 @@ import utils.Studiengang;
 
 public class InsertCandidateIntoDb implements JavaDelegate{
 
+	/* (non-Javadoc)
+	 * @see org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.engine.delegate.DelegateExecution)
+	 * gets all the variables from the user input
+	 * uses the variables to create a new person in the database and to create a new candidate in the database 
+	 * with the same primary key as the person
+	 */
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
