@@ -10,9 +10,8 @@ public class DeleteCadidateFromDB implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		int pid = (int) execution.getVariable("pid");
-		DBAccess.getInstance().deleteFromBewerber(pid);
-		
-		
+		DBAccess.getInstance().deleteFromPerson(pid);
+		DBAccess.getInstance().deleteFromBewerber(pid);		
 	}
 
 }

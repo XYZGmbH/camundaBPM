@@ -17,9 +17,6 @@ public class CompareNc implements JavaDelegate {
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
-		// Anzahl Leute pro Studiengang, 0.3 Quote für Härtefälle, hier 30 Prozent
-		// execution.setVariable("ncPassend", unserBewerberImNcVergleich(20, 0.3));
-
 		HashMap<String, Object> map = (HashMap<String, Object>) execution.getVariable("bewerberquote");
 		double bewerberquote = (double) map.get("bewerberquote");
 		
@@ -27,9 +24,6 @@ public class CompareNc implements JavaDelegate {
 		int pid = (int) execution.getVariable("pid");
 		
 		boolean ncPassend = unserBewerberImNcVergleich(20, 0.3, bewerberquote, pid, studienfach);
-
-		
-		execution.setVariable("unterlagenKorrekt", false);
 		
 		if (ncPassend == true) {
 			execution.setVariable("ncPassend", true);

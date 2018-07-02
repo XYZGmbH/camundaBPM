@@ -114,7 +114,7 @@ public class SendMail implements JavaDelegate {
 		email.setSSL(true);
 		email.setSmtpPort(587);
 		email.setHostName("mail.htw-berlin.de");
-		//email.setAuthentication();
+		email.setAuthentication("name", "password");
 		email.addTo(toEmail);
 		email.setFrom("s0561126@htw-berlin.de");
 		email.setSubject(subject);
